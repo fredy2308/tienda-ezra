@@ -1,3 +1,4 @@
+﻿import API_URL from '../api'
 import { useEffect, useState } from 'react'
 
 function Gastos() {
@@ -8,7 +9,7 @@ function Gastos() {
 
   const [form, setForm] = useState({
     description: '',
-    category: 'Operación',
+    category: 'OperaciÃ³n',
     amount: '',
     paymentMethod: 'Efectivo',
     expenseDate: new Date().toISOString().split('T')[0],
@@ -28,7 +29,7 @@ function Gastos() {
 
       const response =
         await fetch(
-          'http://localhost:3001/api/expenses'
+          `${API_URL}/api/expenses`
         )
 
       const data =
@@ -103,7 +104,7 @@ function Gastos() {
     if (!form.description.trim()) {
 
       alert(
-        'Escribe una descripción del gasto.'
+        'Escribe una descripciÃ³n del gasto.'
       )
 
       return
@@ -133,7 +134,7 @@ function Gastos() {
 
       const response =
         await fetch(
-          'http://localhost:3001/api/expenses',
+          `${API_URL}/api/expenses`,
           {
             method: 'POST',
 
@@ -192,7 +193,7 @@ function Gastos() {
         description: '',
 
         category:
-          'Operación',
+          'OperaciÃ³n',
 
         amount: '',
 
@@ -235,7 +236,7 @@ function Gastos() {
 
     const confirmed =
       window.confirm(
-        '¿Seguro que quieres eliminar este gasto?'
+        'Â¿Seguro que quieres eliminar este gasto?'
       )
 
     if (!confirmed) {
@@ -247,7 +248,7 @@ function Gastos() {
 
       const response =
         await fetch(
-          `http://localhost:3001/api/expenses/${id}`,
+          `${API_URL}/api/expenses/${id}`,
           {
             method: 'DELETE',
           }
@@ -394,7 +395,7 @@ function Gastos() {
         <div className="stat-card">
 
           <span>
-            Total histórico
+            Total histÃ³rico
           </span>
 
           <strong>
@@ -443,7 +444,7 @@ function Gastos() {
           <div className="form-group">
 
             <label>
-              Descripción
+              DescripciÃ³n
             </label>
 
             <input
@@ -460,7 +461,7 @@ function Gastos() {
           <div className="form-group">
 
             <label>
-              Categoría
+              CategorÃ­a
             </label>
 
             <select
@@ -469,8 +470,8 @@ function Gastos() {
               onChange={handleChange}
             >
 
-              <option value="Operación">
-                Operación
+              <option value="OperaciÃ³n">
+                OperaciÃ³n
               </option>
 
               <option value="Servicios">
@@ -493,8 +494,8 @@ function Gastos() {
                 Publicidad
               </option>
 
-              <option value="Nómina">
-                Nómina
+              <option value="NÃ³mina">
+                NÃ³mina
               </option>
 
               <option value="Impuestos">
@@ -532,7 +533,7 @@ function Gastos() {
           <div className="form-group">
 
             <label>
-              Método de pago
+              MÃ©todo de pago
             </label>
 
             <select
@@ -553,8 +554,8 @@ function Gastos() {
                 Transferencia
               </option>
 
-              <option value="Crédito">
-                Crédito
+              <option value="CrÃ©dito">
+                CrÃ©dito
               </option>
 
               <option value="Otro">
@@ -609,7 +610,7 @@ function Gastos() {
 
               {saving
                 ? 'Guardando...'
-                : '💸 Registrar gasto'}
+                : 'ðŸ’¸ Registrar gasto'}
 
             </button>
 
@@ -654,7 +655,7 @@ function Gastos() {
           <div className="empty-state">
 
             <div style={{ fontSize: '40px' }}>
-              💸
+              ðŸ’¸
             </div>
 
             <h3>
@@ -682,15 +683,15 @@ function Gastos() {
                   </th>
 
                   <th>
-                    Descripción
+                    DescripciÃ³n
                   </th>
 
                   <th>
-                    Categoría
+                    CategorÃ­a
                   </th>
 
                   <th>
-                    Método
+                    MÃ©todo
                   </th>
 
                   <th>
@@ -771,7 +772,7 @@ function Gastos() {
                           )
                         }
                       >
-                        🗑️
+                        ðŸ—‘ï¸
                       </button>
 
                     </td>

@@ -1,3 +1,4 @@
+﻿import API_URL from '../api'
 import { useEffect, useState } from 'react'
 
 
@@ -25,7 +26,7 @@ function Inventario() {
 
       const response =
         await fetch(
-          'http://localhost:3001/api/products'
+          `${API_URL}/api/products`
         )
 
 
@@ -73,7 +74,7 @@ function Inventario() {
 
 
   // ========================================
-  // CÁLCULOS
+  // CÃLCULOS
   // ========================================
 
   const totalProducts =
@@ -136,7 +137,7 @@ function Inventario() {
           className="primary-button"
           onClick={loadProducts}
         >
-          🔄 Actualizar
+          ðŸ”„ Actualizar
         </button>
 
       </div>
@@ -235,7 +236,7 @@ function Inventario() {
           <div className="empty-state">
 
             <div className="empty-icon">
-              ⏳
+              â³
             </div>
 
             <h3>
@@ -249,15 +250,15 @@ function Inventario() {
           <div className="empty-state">
 
             <div className="empty-icon">
-              📦
+              ðŸ“¦
             </div>
 
             <h3>
-              Inventario vacío
+              Inventario vacÃ­o
             </h3>
 
             <p>
-              Cuando agregues productos aparecerán aquí.
+              Cuando agregues productos aparecerÃ¡n aquÃ­.
             </p>
 
           </div>
@@ -301,7 +302,7 @@ function Inventario() {
 
 
                     <div className="inventory-icon">
-                      🌱
+                      ðŸŒ±
                     </div>
 
 
@@ -391,13 +392,13 @@ function Inventario() {
                     {isLowStock ? (
 
                       <span className="stock-warning">
-                        ⚠️ Stock bajo
+                        âš ï¸ Stock bajo
                       </span>
 
                     ) : (
 
                       <span className="stock-ok">
-                        ✓ Disponible
+                        âœ“ Disponible
                       </span>
 
                     )}

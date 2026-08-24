@@ -1,3 +1,4 @@
+﻿import API_URL from '../api'
 import { useEffect, useMemo, useState } from 'react'
 
 function Cortes() {
@@ -49,7 +50,7 @@ function Cortes() {
   function formatDate(value) {
 
     if (!value) {
-      return '—'
+      return 'â€”'
     }
 
     const dateObject = new Date(
@@ -73,7 +74,7 @@ function Cortes() {
 
 
   // ========================================
-  // CARGAR INFORMACIÓN
+  // CARGAR INFORMACIÃ“N
   // ========================================
 
   useEffect(() => {
@@ -91,11 +92,11 @@ function Cortes() {
 
 
       // ==================================
-      // RESUMEN DEL DÍA
+      // RESUMEN DEL DÃA
       // ==================================
 
       const summaryResponse = await fetch(
-        `http://localhost:3001/api/cortes/resumen?date=${date}`
+        `${API_URL}/api/cortes/resumen?date=${date}`
       )
 
 
@@ -120,7 +121,7 @@ function Cortes() {
       // ==================================
 
       const cutsResponse = await fetch(
-        'http://localhost:3001/api/cortes'
+        `${API_URL}/api/cortes`
       )
 
 
@@ -183,7 +184,7 @@ function Cortes() {
 
       alert(
         error.message ||
-        'No se pudo cargar la información de cortes.'
+        'No se pudo cargar la informaciÃ³n de cortes.'
       )
 
 
@@ -223,7 +224,7 @@ function Cortes() {
 
 
     // ==================================
-    // VENTAS POR MÉTODO DE PAGO
+    // VENTAS POR MÃ‰TODO DE PAGO
     // ==================================
 
     let cashSales = 0
@@ -261,9 +262,9 @@ function Cortes() {
         } else if (
           name === 'tarjeta' ||
           name === 'credito' ||
-          name === 'crédito' ||
+          name === 'crÃ©dito' ||
           name === 'debito' ||
-          name === 'débito'
+          name === 'dÃ©bito'
         ) {
 
           cardSales += total
@@ -451,7 +452,7 @@ function Cortes() {
     ) {
 
       alert(
-        'El efectivo contado no es válido.'
+        'El efectivo contado no es vÃ¡lido.'
       )
 
       return
@@ -466,7 +467,7 @@ function Cortes() {
     if (cuts.length > 0) {
 
       alert(
-        `Ya existe un corte registrado para el día ${formatDate(date)}.`
+        `Ya existe un corte registrado para el dÃ­a ${formatDate(date)}.`
       )
 
       return
@@ -481,7 +482,7 @@ function Cortes() {
 
       const response =
         await fetch(
-          'http://localhost:3001/api/cortes',
+          `${API_URL}/api/cortes`,
           {
             method: 'POST',
 
@@ -576,7 +577,7 @@ function Cortes() {
         <div>
 
           <p className="welcome">
-            Ezra — Tienda de Plantas y Decoración
+            Ezra â€” Tienda de Plantas y DecoraciÃ³n
           </p>
 
           <h2>
@@ -584,7 +585,7 @@ function Cortes() {
           </h2>
 
           <p className="page-description">
-            Consulta las ventas del día,
+            Consulta las ventas del dÃ­a,
             verifica el efectivo y registra
             el cierre de caja.
           </p>
@@ -673,7 +674,7 @@ function Cortes() {
           <div className="empty-state">
 
             <div className="empty-icon">
-              💰
+              ðŸ’°
             </div>
 
             <h3>
@@ -681,7 +682,7 @@ function Cortes() {
             </h3>
 
             <p>
-              Estamos consultando las ventas y gastos del día.
+              Estamos consultando las ventas y gastos del dÃ­a.
             </p>
 
           </div>
@@ -701,7 +702,7 @@ function Cortes() {
             <div>
 
               <span>
-                Ventas del día
+                Ventas del dÃ­a
               </span>
 
               <strong>
@@ -932,7 +933,7 @@ function Cortes() {
                 >
 
                   <span>
-                    Gastos del día
+                    Gastos del dÃ­a
                   </span>
 
                   <strong
@@ -1037,11 +1038,11 @@ function Cortes() {
                 <div>
 
                   <h3>
-                    🔐 Cerrar caja
+                    ðŸ” Cerrar caja
                   </h3>
 
                   <p>
-                    Registra el efectivo físico encontrado.
+                    Registra el efectivo fÃ­sico encontrado.
                   </p>
 
                 </div>
@@ -1080,7 +1081,7 @@ function Cortes() {
                     fontSize: '11px',
                   }}
                 >
-                  Cantidad de dinero físico que realmente tienes en caja.
+                  Cantidad de dinero fÃ­sico que realmente tienes en caja.
                 </small>
 
               </div>
@@ -1170,7 +1171,7 @@ function Cortes() {
                     {difference > 0
                       ? '+'
                       : difference < 0
-                        ? '−'
+                        ? 'âˆ’'
                         : ''}
 
                     {formatCurrency(
@@ -1214,7 +1215,7 @@ function Cortes() {
               </div>
 
 
-              {/* BOTÓN */}
+              {/* BOTÃ“N */}
 
               <button
                 className="primary-button"
@@ -1239,8 +1240,8 @@ function Cortes() {
                 {saving
                   ? 'Registrando corte...'
                   : cuts.length > 0
-                    ? '✓ Corte ya registrado'
-                    : '🔒 Registrar corte'}
+                    ? 'âœ“ Corte ya registrado'
+                    : 'ðŸ”’ Registrar corte'}
 
               </button>
 
@@ -1282,7 +1283,7 @@ function Cortes() {
               <div className="empty-state">
 
                 <div className="empty-icon">
-                  📋
+                  ðŸ“‹
                 </div>
 
                 <h3>
@@ -1290,7 +1291,7 @@ function Cortes() {
                 </h3>
 
                 <p>
-                  Todavía no se ha registrado un corte para esta fecha.
+                  TodavÃ­a no se ha registrado un corte para esta fecha.
                 </p>
 
               </div>
@@ -1487,7 +1488,7 @@ function Cortes() {
                               {cutDifference > 0
                                 ? '+'
                                 : cutDifference < 0
-                                  ? '−'
+                                  ? 'âˆ’'
                                   : ''}
 
                               {formatCurrency(

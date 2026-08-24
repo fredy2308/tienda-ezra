@@ -1,3 +1,4 @@
+﻿import API_URL from '../api'
 import { useEffect, useState } from 'react'
 
 import ProductForm from '../components/ProductForm'
@@ -26,7 +27,7 @@ function Productos() {
       setLoading(true)
 
       const response = await fetch(
-        'http://localhost:3001/api/products'
+        `${API_URL}/api/products`
       )
 
 
@@ -63,7 +64,7 @@ function Productos() {
 
 
   // ========================================
-  // CARGAR PRODUCTOS AL ABRIR LA PÁGINA
+  // CARGAR PRODUCTOS AL ABRIR LA PÃGINA
   // ========================================
 
   useEffect(() => {
@@ -82,7 +83,7 @@ function Productos() {
     try {
 
       const response = await fetch(
-        'http://localhost:3001/api/products',
+        `${API_URL}/api/products`,
         {
           method: 'POST',
 
@@ -153,7 +154,7 @@ function Productos() {
 
     const confirmDelete =
       window.confirm(
-        '¿Seguro que deseas eliminar este producto?'
+        'Â¿Seguro que deseas eliminar este producto?'
       )
 
 
@@ -165,7 +166,7 @@ function Productos() {
     try {
 
       const response = await fetch(
-        `http://localhost:3001/api/products/${id}`,
+        `${API_URL}/api/products/${id}`,
         {
           method: 'DELETE',
         }
@@ -202,7 +203,7 @@ function Productos() {
 
 
   // ========================================
-  // CÁLCULOS
+  // CÃLCULOS
   // ========================================
 
   const totalUnits =
@@ -249,7 +250,7 @@ function Productos() {
         <div className="empty-state">
 
           <div className="empty-icon">
-            🌿
+            ðŸŒ¿
           </div>
 
           <h3>
@@ -282,7 +283,7 @@ function Productos() {
         <div>
 
           <p className="welcome">
-            Catálogo
+            CatÃ¡logo
           </p>
 
           <h2>
@@ -290,7 +291,7 @@ function Productos() {
           </h2>
 
           <p className="page-description">
-            Administra tus plantas, decoración y artículos.
+            Administra tus plantas, decoraciÃ³n y artÃ­culos.
           </p>
 
         </div>

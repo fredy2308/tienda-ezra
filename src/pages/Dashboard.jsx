@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useState } from 'react'
+import API_URL from '../api'
 
 function Dashboard() {
 
@@ -11,14 +12,14 @@ function Dashboard() {
 
 
   // ========================================
-  // CONFIGURACIÓN
+  // CONFIGURACIÃ“N
   // ========================================
 
-  const API_URL = 'http://localhost:3001'
+  const API_URL = `${API_URL}`
 
 
   // ========================================
-  // CARGAR INFORMACIÓN
+  // CARGAR INFORMACIÃ“N
   // ========================================
 
   useEffect(() => {
@@ -94,7 +95,7 @@ function Dashboard() {
 
 
         // ==================================
-        // GUARDAR INFORMACIÓN
+        // GUARDAR INFORMACIÃ“N
         // ==================================
 
         setSales(
@@ -393,7 +394,7 @@ function Dashboard() {
 
 
   // ========================================
-  // DISTRIBUCIÓN DEL DINERO
+  // DISTRIBUCIÃ“N DEL DINERO
   // ========================================
 
   const capitalForRestock =
@@ -481,7 +482,7 @@ function Dashboard() {
 
 
       {/* ================================== */}
-      {/* TÍTULO */}
+      {/* TÃTULO */}
       {/* ================================== */}
 
       <div className="section-title">
@@ -493,7 +494,7 @@ function Dashboard() {
           </h2>
 
           <p>
-            Aquí tienes el estado actual de tu negocio.
+            AquÃ­ tienes el estado actual de tu negocio.
           </p>
 
         </div>
@@ -518,7 +519,7 @@ function Dashboard() {
           }}
         >
 
-          ⚠️ {error}
+          âš ï¸ {error}
 
         </div>
 
@@ -537,7 +538,7 @@ function Dashboard() {
         <div className="card">
 
           <div className="card-icon sales">
-            💰
+            ðŸ’°
           </div>
 
           <div>
@@ -571,7 +572,7 @@ function Dashboard() {
         <div className="card">
 
           <div className="card-icon profit">
-            📈
+            ðŸ“ˆ
           </div>
 
           <div>
@@ -601,7 +602,7 @@ function Dashboard() {
         <div className="card">
 
           <div className="card-icon inventory">
-            📦
+            ðŸ“¦
           </div>
 
           <div>
@@ -631,7 +632,7 @@ function Dashboard() {
         <div className="card">
 
           <div className="card-icon expenses">
-            💸
+            ðŸ’¸
           </div>
 
           <div>
@@ -693,7 +694,7 @@ function Dashboard() {
             <div className="empty-state">
 
               <div className="empty-icon">
-                ⏳
+                â³
               </div>
 
               <h3>
@@ -707,15 +708,15 @@ function Dashboard() {
             <div className="empty-state">
 
               <div className="empty-icon">
-                📊
+                ðŸ“Š
               </div>
 
               <h3>
-                Aún no hay ventas
+                AÃºn no hay ventas
               </h3>
 
               <p>
-                Cuando realices ventas aparecerán aquí.
+                Cuando realices ventas aparecerÃ¡n aquÃ­.
               </p>
 
             </div>
@@ -790,7 +791,7 @@ function Dashboard() {
               </h3>
 
               <p>
-                Distribución de tu utilidad
+                DistribuciÃ³n de tu utilidad
               </p>
 
             </div>
@@ -801,12 +802,12 @@ function Dashboard() {
           <div className="business-status">
 
 
-            {/* REPOSICIÓN */}
+            {/* REPOSICIÃ“N */}
 
             <div className="status-row">
 
               <span>
-                Capital para reposición
+                Capital para reposiciÃ³n
               </span>
 
               <strong>
@@ -818,12 +819,12 @@ function Dashboard() {
             </div>
 
 
-            {/* REINVERSIÓN */}
+            {/* REINVERSIÃ“N */}
 
             <div className="status-row">
 
               <span>
-                Reinversión
+                ReinversiÃ³n
               </span>
 
               <strong>

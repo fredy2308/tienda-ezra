@@ -1,4 +1,4 @@
-import API_URL from '../api'
+﻿import API_URL from '../api'
 import { useEffect, useState } from 'react'
 
 
@@ -677,7 +677,7 @@ function Transformaciones() {
     ) {
 
       alert(
-        'La cantidad a transformar debe ser un número entero mayor a cero.'
+        'La cantidad a transformar debe ser un nÃºmero entero mayor a cero.'
       )
 
       return
@@ -716,7 +716,7 @@ function Transformaciones() {
     ) {
 
       alert(
-        'El costo de compra del producto de origen no es válido.'
+        'El costo de compra del producto de origen no es vÃ¡lido.'
       )
 
       return
@@ -757,7 +757,7 @@ function Transformaciones() {
       ) {
 
         alert(
-          'Escribe la categoría de todos los productos resultantes.'
+          'Escribe la categorÃ­a de todos los productos resultantes.'
         )
 
         return
@@ -792,7 +792,7 @@ function Transformaciones() {
       ) {
 
         alert(
-          'La cantidad de cada resultado debe ser un número entero mayor a cero.'
+          'La cantidad de cada resultado debe ser un nÃºmero entero mayor a cero.'
         )
 
         return
@@ -948,14 +948,14 @@ function Transformaciones() {
 
         throw new Error(
           data.error ||
-          'No se pudo registrar la transformación.'
+          'No se pudo registrar la transformaciÃ³n.'
         )
 
       }
 
 
       alert(
-        'Transformación registrada correctamente.'
+        'TransformaciÃ³n registrada correctamente.'
       )
 
 
@@ -988,14 +988,14 @@ function Transformaciones() {
     } catch (error) {
 
       console.error(
-        'Error registrando transformación:',
+        'Error registrando transformaciÃ³n:',
         error
       )
 
 
       alert(
         error.message ||
-        'No se pudo registrar la transformación.'
+        'No se pudo registrar la transformaciÃ³n.'
       )
 
     }
@@ -1017,7 +1017,7 @@ function Transformaciones() {
         <div>
 
           <p className="welcome">
-            Producción e inventario
+            ProducciÃ³n e inventario
           </p>
 
           <h2>
@@ -1041,7 +1041,7 @@ function Transformaciones() {
 
         >
 
-          + Nueva transformación
+          + Nueva transformaciÃ³n
 
         </button>
 
@@ -1062,7 +1062,7 @@ function Transformaciones() {
       <div className="panel transformation-info">
 
         <div className="transformation-info-icon">
-          �YO�
+          ðŸŒ±
         </div>
 
         <div>
@@ -1072,7 +1072,7 @@ function Transformaciones() {
           </h3>
 
           <p>
-            Cada resultado de una transformación puede ser un producto diferente, con su propio nombre, unidad, costo y precio de venta.
+            Cada resultado de una transformaciÃ³n puede ser un producto diferente, con su propio nombre, unidad, costo y precio de venta.
           </p>
 
         </div>
@@ -1085,7 +1085,7 @@ function Transformaciones() {
         <div className="empty-state">
 
           <div className="empty-icon">
-            ⏳
+            â³
           </div>
 
           <h3>
@@ -1109,7 +1109,7 @@ function Transformaciones() {
               <div>
 
                 <p className="welcome">
-                  Nueva operación
+                  Nueva operaciÃ³n
                 </p>
 
                 <h3>
@@ -1131,7 +1131,7 @@ function Transformaciones() {
 
               >
 
-                �-
+                Ã—
 
               </button>
 
@@ -1211,13 +1211,13 @@ function Transformaciones() {
                         >
 
                           #{purchase.id}
-                          {' · '}
+                          {' Â· '}
                           {purchase.description}
-                          {' · '}
+                          {' Â· '}
                           {money(
                             purchase.total_cost
                           )}
-                          {' · '}
+                          {' Â· '}
                           {purchase.quantity || 1}
                           {' unidades'}
 
@@ -1274,11 +1274,11 @@ function Transformaciones() {
                             >
 
                               {product.name}
-                              {' · Stock: '}
+                              {' Â· Stock: '}
                               {product.stock}
                               {' '}
                               {product.unit}
-                              {' · Costo: '}
+                              {' Â· Costo: '}
                               {money(
                                 product.cost
                               )}
@@ -1344,7 +1344,7 @@ function Transformaciones() {
                     <div className="source-cost">
 
                       <span>
-                        Costo que se transformará
+                        Costo que se transformarÃ¡
                       </span>
 
                       <strong>
@@ -1377,7 +1377,7 @@ function Transformaciones() {
                   <div>
 
                     <strong>
-                      ¿Qué obtuviste?
+                      Â¿QuÃ© obtuviste?
                     </strong>
 
                     <small>
@@ -1432,7 +1432,7 @@ function Transformaciones() {
                                   )
                               }
 
-                              placeholder="Ej. Kalanchoe pequeño"
+                              placeholder="Ej. Kalanchoe pequeÃ±o"
 
                             />
 
@@ -1442,7 +1442,7 @@ function Transformaciones() {
                           <div className="form-group">
 
                             <label>
-                              Categoría
+                              CategorÃ­a
                             </label>
 
                             <input
@@ -1619,7 +1619,7 @@ function Transformaciones() {
                           <div>
 
                             <span>
-                              Participación
+                              ParticipaciÃ³n
                             </span>
 
                             <strong>
@@ -1854,13 +1854,13 @@ function Transformaciones() {
                     {isBalanced ? (
 
                       <>
-                        �o" El 100% del costo está distribuido
+                        âœ“ El 100% del costo estÃ¡ distribuido
                       </>
 
                     ) : (
 
                       <>
-                        Revisando distribución...
+                        Revisando distribuciÃ³n...
                       </>
 
                     )}
@@ -1904,7 +1904,7 @@ function Transformaciones() {
                         )
                     }
 
-                    placeholder="Información adicional..."
+                    placeholder="InformaciÃ³n adicional..."
 
                     rows="3"
 
@@ -1956,7 +1956,7 @@ function Transformaciones() {
 
                 >
 
-                  Registrar transformación
+                  Registrar transformaciÃ³n
 
                 </button>
 

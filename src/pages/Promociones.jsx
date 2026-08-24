@@ -1,4 +1,4 @@
-import API_URL from '../api'
+﻿import API_URL from '../api'
 import { useEffect, useState } from 'react'
 
 
@@ -127,7 +127,7 @@ function Promociones() {
 
 
   // ========================================
-  // CREAR PROMOCI�"N
+  // CREAR PROMOCIÃ“N
   // ========================================
 
   async function handleCreatePromotion(event) {
@@ -173,7 +173,7 @@ function Promociones() {
     ) {
 
       alert(
-        'La promoción debe tener mínimo 2 piezas.'
+        'La promociÃ³n debe tener mÃ­nimo 2 piezas.'
       )
 
       return
@@ -191,7 +191,7 @@ function Promociones() {
     ) {
 
       alert(
-        'Ingresa un precio promocional válido.'
+        'Ingresa un precio promocional vÃ¡lido.'
       )
 
       return
@@ -256,14 +256,14 @@ function Promociones() {
 
         throw new Error(
           data.error ||
-          'No se pudo crear la promoción.'
+          'No se pudo crear la promociÃ³n.'
         )
 
       }
 
 
       alert(
-        'Promoción creada correctamente.'
+        'PromociÃ³n creada correctamente.'
       )
 
 
@@ -274,7 +274,7 @@ function Promociones() {
       setPromotionPrice('')
 
 
-      // Actualizar información
+      // Actualizar informaciÃ³n
 
       await loadData()
 
@@ -282,13 +282,13 @@ function Promociones() {
     } catch (error) {
 
       console.error(
-        'Error creando promoción:',
+        'Error creando promociÃ³n:',
         error
       )
 
       alert(
         error.message ||
-        'No se pudo crear la promoción.'
+        'No se pudo crear la promociÃ³n.'
       )
 
     } finally {
@@ -332,7 +332,7 @@ function Promociones() {
 
         throw new Error(
           data.error ||
-          'No se pudo actualizar la promoción.'
+          'No se pudo actualizar la promociÃ³n.'
         )
 
       }
@@ -344,13 +344,13 @@ function Promociones() {
     } catch (error) {
 
       console.error(
-        'Error actualizando promoción:',
+        'Error actualizando promociÃ³n:',
         error
       )
 
       alert(
         error.message ||
-        'No se pudo actualizar la promoción.'
+        'No se pudo actualizar la promociÃ³n.'
       )
 
     }
@@ -359,14 +359,14 @@ function Promociones() {
 
 
   // ========================================
-  // ELIMINAR PROMOCI�"N
+  // ELIMINAR PROMOCIÃ“N
   // ========================================
 
   async function deletePromotion(promotion) {
 
     const confirmed =
       window.confirm(
-        `¿Deseas eliminar la promoción de ${promotion.quantity} piezas por ${formatCurrency(promotion.promotionPrice)} de "${promotion.productName}"?`
+        `Â¿Deseas eliminar la promociÃ³n de ${promotion.quantity} piezas por ${formatCurrency(promotion.promotionPrice)} de "${promotion.productName}"?`
       )
 
 
@@ -393,14 +393,14 @@ function Promociones() {
 
         throw new Error(
           data.error ||
-          'No se pudo eliminar la promoción.'
+          'No se pudo eliminar la promociÃ³n.'
         )
 
       }
 
 
       alert(
-        'Promoción eliminada correctamente.'
+        'PromociÃ³n eliminada correctamente.'
       )
 
 
@@ -410,13 +410,13 @@ function Promociones() {
     } catch (error) {
 
       console.error(
-        'Error eliminando promoción:',
+        'Error eliminando promociÃ³n:',
         error
       )
 
       alert(
         error.message ||
-        'No se pudo eliminar la promoción.'
+        'No se pudo eliminar la promociÃ³n.'
       )
 
     }
@@ -450,7 +450,7 @@ function Promociones() {
 
 
   // ========================================
-  // PÁGINA
+  // PÃGINA
   // ========================================
 
   return (
@@ -466,7 +466,7 @@ function Promociones() {
         <div>
 
           <p className="welcome">
-            Ezra �?" Tienda de Plantas y Decoración
+            Ezra â€” Tienda de Plantas y DecoraciÃ³n
           </p>
 
           <h2>
@@ -497,7 +497,7 @@ function Promociones() {
 
 
         {/* =================================
-            NUEVA PROMOCI�"N
+            NUEVA PROMOCIÃ“N
         ================================= */}
 
         <div className="panel">
@@ -507,7 +507,7 @@ function Promociones() {
             <div>
 
               <h3>
-                �Y��️ Nueva promoción
+                ðŸ·ï¸ Nueva promociÃ³n
               </h3>
 
               <p>
@@ -552,7 +552,7 @@ function Promociones() {
                   >
 
                     {product.name}
-                    {' �?" '}
+                    {' â€” '}
                     {formatCurrency(product.price)}
 
                   </option>
@@ -564,7 +564,7 @@ function Promociones() {
             </div>
 
 
-            {/* INFORMACI�"N DEL PRODUCTO */}
+            {/* INFORMACIÃ“N DEL PRODUCTO */}
 
             {selectedProduct && (
 
@@ -688,7 +688,7 @@ function Promociones() {
               )}
 
 
-            {/* BOT�"N */}
+            {/* BOTÃ“N */}
 
             <button
               type="submit"
@@ -701,7 +701,7 @@ function Promociones() {
 
               {saving
                 ? 'Guardando...'
-                : '�Y��️ Crear promoción'
+                : 'ðŸ·ï¸ Crear promociÃ³n'
               }
 
             </button>
@@ -739,7 +739,7 @@ function Promociones() {
             <div className="empty-state">
 
               <div className="empty-icon">
-                �Y��️
+                ðŸ·ï¸
               </div>
 
               <h3>
@@ -747,7 +747,7 @@ function Promociones() {
               </h3>
 
               <p>
-                Crea tu primera promoción.
+                Crea tu primera promociÃ³n.
               </p>
 
             </div>
@@ -829,8 +829,8 @@ function Promociones() {
                       <strong>
 
                         {promotion.active
-                          ? '�YY� Activa'
-                          : '�s� Inactiva'
+                          ? 'ðŸŸ¢ Activa'
+                          : 'âšª Inactiva'
                         }
 
                       </strong>

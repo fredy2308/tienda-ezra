@@ -1,4 +1,4 @@
-import API_URL from '../api'
+﻿import API_URL from '../api'
 import { useEffect, useState } from 'react'
 
 import ProductForm from '../components/ProductForm'
@@ -64,7 +64,7 @@ function Productos() {
 
 
   // ========================================
-  // CARGAR PRODUCTOS AL ABRIR LA PÁGINA
+  // CARGAR PRODUCTOS AL ABRIR LA PÃGINA
   // ========================================
 
   useEffect(() => {
@@ -154,7 +154,7 @@ function Productos() {
 
     const confirmDelete =
       window.confirm(
-        '¿Seguro que deseas eliminar este producto?'
+        'Â¿Seguro que deseas eliminar este producto?'
       )
 
 
@@ -203,7 +203,7 @@ function Productos() {
 
 
   // ========================================
-  // CÁLCULOS
+  // CÃLCULOS
   // ========================================
 
   const totalUnits =
@@ -250,7 +250,7 @@ function Productos() {
         <div className="empty-state">
 
           <div className="empty-icon">
-            �YO�
+            ðŸŒ¿
           </div>
 
           <h3>
@@ -283,7 +283,7 @@ function Productos() {
         <div>
 
           <p className="welcome">
-            Catálogo
+            CatÃ¡logo
           </p>
 
           <h2>
@@ -291,7 +291,7 @@ function Productos() {
           </h2>
 
           <p className="page-description">
-            Administra tus plantas, decoración y artículos.
+            Administra tus plantas, decoraciÃ³n y artÃ­culos.
           </p>
 
         </div>

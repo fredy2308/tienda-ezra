@@ -1,4 +1,4 @@
-﻿import API_URL from '../api'
+import API_URL from '../api'
 import { useEffect, useMemo, useState } from 'react'
 
 
@@ -138,7 +138,7 @@ function Reportes() {
 
 
       /*
-       * Dependiendo de cÃ³mo estÃ© construido
+       * Dependiendo de cómo esté construido
        * tu endpoint de compras, puede regresar:
        *
        * []
@@ -524,7 +524,7 @@ function Reportes() {
 
 
   // ========================================
-  // COMPROBAR SI ESTÃ DENTRO DEL PERIODO
+  // COMPROBAR SI ESTÁ DENTRO DEL PERIODO
   // ========================================
 
   function isInPeriod(value) {
@@ -773,11 +773,11 @@ function Reportes() {
 
 
   // ========================================
-  // RECUPERACIÃ“N DE INVERSIÃ“N
+  // RECUPERACIÓN DE INVERSIÓN
   // ========================================
 
   /*
-   * Para no decir que una compra estÃ¡
+   * Para no decir que una compra está
    * recuperada solamente porque hubo ventas,
    * usamos el costo real de los productos
    * vendidos.
@@ -787,7 +787,7 @@ function Reportes() {
    * Compras = $805
    * Costo vendido = $407.51
    *
-   * RecuperaciÃ³n = 407.51 / 805
+   * Recuperación = 407.51 / 805
    */
 
   const recoveredAmount =
@@ -966,7 +966,7 @@ function Reportes() {
       loading
     ) {
 
-      return 'Analizando la informaciÃ³n financiera...'
+      return 'Analizando la información financiera...'
 
     }
 
@@ -976,7 +976,7 @@ function Reportes() {
     ) {
 
       return (
-        `El negocio generÃ³ una utilidad neta de ` +
+        `El negocio generó una utilidad neta de ` +
         `${money(netProfit)} durante este periodo. ` +
         `Se registraron ${money(totalSales)} en ventas ` +
         `y ${money(totalExpenses)} en gastos.`
@@ -991,7 +991,7 @@ function Reportes() {
 
       return (
         `Durante este periodo el negocio tuvo una ` +
-        `pÃ©rdida de ${money(
+        `pérdida de ${money(
           Math.abs(netProfit)
         )}. ` +
         `Conviene revisar los costos, gastos y margen de venta.`
@@ -1001,7 +1001,7 @@ function Reportes() {
 
 
     return (
-      'El resultado del periodo quedÃ³ en equilibrio.'
+      'El resultado del periodo quedó en equilibrio.'
     )
 
   }
@@ -1024,7 +1024,7 @@ function Reportes() {
           <div>
 
             <p className="welcome">
-              AnÃ¡lisis financiero
+              Análisis financiero
             </p>
 
             <h2>
@@ -1032,7 +1032,7 @@ function Reportes() {
             </h2>
 
             <p>
-              Analizando la informaciÃ³n de tu negocio...
+              Analizando la información de tu negocio...
             </p>
 
           </div>
@@ -1043,7 +1043,7 @@ function Reportes() {
         <div className="empty-state">
 
           <div className="empty-icon">
-            ðŸ“Š
+            📊
           </div>
 
           <h3>
@@ -1080,7 +1080,7 @@ function Reportes() {
         <div>
 
           <p className="welcome">
-            AnÃ¡lisis financiero
+            Análisis financiero
           </p>
 
           <h2>
@@ -1088,8 +1088,8 @@ function Reportes() {
           </h2>
 
           <p>
-            Analiza cuÃ¡nto invertiste, cuÃ¡nto vendiste,
-            cuÃ¡nto gastaste y cuÃ¡nto realmente generÃ³ tu negocio.
+            Analiza cuánto invertiste, cuánto vendiste,
+            cuánto gastaste y cuánto realmente generó tu negocio.
           </p>
 
         </div>
@@ -1146,7 +1146,7 @@ function Reportes() {
             className="primary-button"
             onClick={loadReports}
           >
-            â†» Actualizar
+            🔄 Actualizar
           </button>
 
         </div>
@@ -1296,13 +1296,13 @@ function Reportes() {
         <div className="card">
 
           <div className="card-icon inventory">
-            ðŸ›’
+            📦
           </div>
 
           <div>
 
             <p>
-              InversiÃ³n en compras
+              Inversión en compras
             </p>
 
             <h3>
@@ -1325,7 +1325,7 @@ function Reportes() {
         <div className="card">
 
           <div className="card-icon sales">
-            ðŸ’°
+            💰
           </div>
 
           <div>
@@ -1354,7 +1354,7 @@ function Reportes() {
         <div className="card">
 
           <div className="card-icon profit">
-            ðŸ“ˆ
+            📈
           </div>
 
           <div>
@@ -1379,7 +1379,7 @@ function Reportes() {
         <div className="card">
 
           <div className="card-icon expenses">
-            ðŸ’¸
+            💸
           </div>
 
           <div>
@@ -1424,7 +1424,7 @@ function Reportes() {
               </h3>
 
               <p>
-                AsÃ­ se moviÃ³ el dinero de tu negocio.
+                Así se movió el dinero de tu negocio.
               </p>
 
             </div>
@@ -1531,7 +1531,7 @@ function Reportes() {
 
 
         {/* ================================= */}
-        {/* RECUPERACIÃ“N */}
+        {/* RECUPERACIÓN */}
         {/* ================================= */}
 
         <div className="panel">
@@ -1541,11 +1541,11 @@ function Reportes() {
             <div>
 
               <h3>
-                RecuperaciÃ³n de inversiÃ³n
+                Recuperación de inversión
               </h3>
 
               <p>
-                Â¿CuÃ¡nto de lo invertido ya recuperaste?
+                ¿Cuánto de lo invertido ya recuperaste?
               </p>
 
             </div>
@@ -1668,7 +1668,7 @@ function Reportes() {
 
 
       {/* ================================= */}
-      {/* ANÃLISIS */}
+      {/* ANÁLISIS */}
       {/* ================================= */}
 
       <div
@@ -1684,13 +1684,13 @@ function Reportes() {
 
             <h3>
               {netProfit >= 0
-                ? 'ðŸ“ˆ El negocio generÃ³ utilidad'
-                : 'âš ï¸ AtenciÃ³n al resultado del periodo'
+                ? '📈 El negocio generó utilidad'
+                : '⚠️ Atención al resultado del periodo'
               }
             </h3>
 
             <p>
-              AnÃ¡lisis automÃ¡tico del periodo seleccionado.
+              Análisis automático del periodo seleccionado.
             </p>
 
           </div>
@@ -1742,7 +1742,7 @@ function Reportes() {
             </h3>
 
             <p>
-              MÃ©tricas para entender el rendimiento.
+              Métricas para entender el rendimiento.
             </p>
 
           </div>
@@ -1762,7 +1762,7 @@ function Reportes() {
           <div className="status-row">
 
             <span>
-              Rendimiento de inversiÃ³n
+              Rendimiento de inversión
             </span>
 
             <strong>
@@ -1952,11 +1952,11 @@ function Reportes() {
           <div>
 
             <h3>
-              Compras e inversiÃ³n
+              Compras e inversión
             </h3>
 
             <p>
-              Detalle de cuÃ¡nto destinaste a adquirir mercancÃ­a.
+              Detalle de cuánto destinaste a adquirir mercancía.
             </p>
 
           </div>
@@ -1974,7 +1974,7 @@ function Reportes() {
           <div className="empty-state">
 
             <div className="empty-icon">
-              ðŸ›’
+              📦
             </div>
 
             <h3>
@@ -1982,7 +1982,7 @@ function Reportes() {
             </h3>
 
             <p>
-              Las compras registradas aparecerÃ¡n aquÃ­.
+              Las compras registradas aparecerán aquí.
             </p>
 
           </div>
@@ -2119,7 +2119,7 @@ function Reportes() {
                         {purchase.purchase_date ||
                           purchase.date ||
                           purchase.created_at ||
-                          'â€”'}
+                          '—'}
 
                       </td>
 
@@ -2228,7 +2228,7 @@ function Reportes() {
           <div className="empty-state">
 
             <div className="empty-icon">
-              ðŸ’°
+              💰
             </div>
 
             <h3>
@@ -2284,7 +2284,7 @@ function Reportes() {
                       borderBottom: '1px solid #e5e8e3',
                     }}
                   >
-                    MÃ©todo
+                    Método
                   </th>
 
                   <th
@@ -2352,7 +2352,7 @@ function Reportes() {
                       >
 
                         {sale.sale_date ||
-                          'â€”'}
+                          '—'}
 
                       </td>
 
@@ -2470,7 +2470,7 @@ function Reportes() {
           <div className="empty-state">
 
             <div className="empty-icon">
-              ðŸ’¸
+              💸
             </div>
 
             <h3>
@@ -2516,7 +2516,7 @@ function Reportes() {
                       borderBottom: '1px solid #e5e8e3',
                     }}
                   >
-                    DescripciÃ³n
+                    Descripción
                   </th>
 
                   <th
@@ -2526,7 +2526,7 @@ function Reportes() {
                       borderBottom: '1px solid #e5e8e3',
                     }}
                   >
-                    CategorÃ­a
+                    Categoría
                   </th>
 
                   <th
@@ -2536,7 +2536,7 @@ function Reportes() {
                       borderBottom: '1px solid #e5e8e3',
                     }}
                   >
-                    MÃ©todo
+                    Método
                   </th>
 
                   <th
@@ -2573,7 +2573,7 @@ function Reportes() {
                       >
 
                         {expense.expense_date ||
-                          'â€”'}
+                          '—'}
 
                       </td>
 
@@ -2598,7 +2598,7 @@ function Reportes() {
                       >
 
                         {expense.category ||
-                          'OperaciÃ³n'}
+                          'Operación'}
 
                       </td>
 
@@ -2661,7 +2661,7 @@ function Reportes() {
         <div className="card">
 
           <div className="card-icon inventory">
-            ðŸ“¦
+            📈
           </div>
 
           <div>
@@ -2675,7 +2675,7 @@ function Reportes() {
             </h3>
 
             <span>
-              MercancÃ­a disponible
+              Mercancía disponible
             </span>
 
           </div>
@@ -2686,7 +2686,7 @@ function Reportes() {
         <div className="card">
 
           <div className="card-icon expenses">
-            ðŸ›’
+            📦
           </div>
 
           <div>
@@ -2711,7 +2711,7 @@ function Reportes() {
         <div className="card">
 
           <div className="card-icon sales">
-            ðŸ’°
+            💰
           </div>
 
           <div>
@@ -2736,7 +2736,7 @@ function Reportes() {
         <div className="card">
 
           <div className="card-icon profit">
-            ðŸ“ˆ
+            📈
           </div>
 
           <div>
@@ -2750,7 +2750,7 @@ function Reportes() {
             </h3>
 
             <span>
-              DespuÃ©s de gastos
+              Después de gastos
             </span>
 
           </div>

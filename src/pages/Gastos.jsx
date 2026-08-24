@@ -1,336 +1,222 @@
-﻿import API_URL from '../api'
+import API_URL from '../api'
 import { useEffect, useState } from 'react'
 
 function Gastos() {
-
   const [gastos, setGastos] = useState([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
 
   const [form, setForm] = useState({
     description: '',
-    category: 'OperaciÃ³n',
+    category: 'Operación',
     amount: '',
     paymentMethod: 'Efectivo',
     expenseDate: new Date().toISOString().split('T')[0],
     notes: '',
   })
 
-
   // ========================================
   // CARGAR GASTOS
   // ========================================
 
   async function loadGastos() {
-
     try {
-
       setLoading(true)
 
-      const response =
-        await fetch(
-          `${API_URL}/api/expenses`
-        )
+      const response = await fetch(
+        `${API_URL}/api/expenses`
+      )
 
-      const data =
-        await response.json()
+      const data = await response.json()
 
       if (!response.ok) {
-
         throw new Error(
-          data.error ||
-          'No se pudieron cargar los gastos.'
+          data.error || 'No se pudieron cargar los gastos.'
         )
-
       }
 
-      setGastos(data)
-
+      setGastos(
+        Array.isArray(data)
+          ? data
+          : []
+      )
     } catch (error) {
-
       console.error(error)
 
       alert(
-        error.message ||
-        'Error cargando gastos.'
+        error.message || 'Error cargando gastos.'
       )
-
     } finally {
-
       setLoading(false)
-
     }
-
   }
 
-
   useEffect(() => {
-
     loadGastos()
-
   }, [])
-
 
   // ========================================
   // CAMBIAR FORMULARIO
   // ========================================
 
   function handleChange(event) {
-
-    const {
-      name,
-      value
-    } = event.target
+    const { name, value } = event.target
 
     setForm(previous => ({
-
       ...previous,
-
       [name]: value,
-
     }))
-
   }
-
 
   // ========================================
   // REGISTRAR GASTO
   // ========================================
 
   async function handleSubmit(event) {
-
     event.preventDefault()
 
     if (!form.description.trim()) {
-
-      alert(
-        'Escribe una descripciÃ³n del gasto.'
-      )
-
+      alert('Escribe una descripción del gasto.')
       return
-
     }
 
-    const amount =
-      Number(form.amount)
+    const amount = Number(form.amount)
 
     if (
       !Number.isFinite(amount) ||
       amount <= 0
     ) {
-
-      alert(
-        'El importe debe ser mayor a cero.'
-      )
-
+      alert('El importe debe ser mayor a cero.')
       return
-
     }
 
-
     try {
-
       setSaving(true)
 
-      const response =
-        await fetch(
-          `${API_URL}/api/expenses`,
-          {
-            method: 'POST',
+      const response = await fetch(
+        `${API_URL}/api/expenses`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            description: form.description.trim(),
+            category: form.category,
+            amount,
+            paymentMethod: form.paymentMethod,
+            expenseDate: form.expenseDate,
+            notes: form.notes.trim(),
+          }),
+        }
+      )
 
-            headers: {
-              'Content-Type':
-                'application/json',
-            },
-
-            body: JSON.stringify({
-
-              description:
-                form.description,
-
-              category:
-                form.category,
-
-              amount,
-
-              paymentMethod:
-                form.paymentMethod,
-
-              expenseDate:
-                form.expenseDate,
-
-              notes:
-                form.notes,
-
-            }),
-
-          }
-        )
-
-
-      const data =
-        await response.json()
-
+      const data = await response.json()
 
       if (!response.ok) {
-
         throw new Error(
-          data.error ||
-          'No se pudo registrar el gasto.'
+          data.error || 'No se pudo registrar el gasto.'
         )
-
       }
-
 
       setGastos(previous => [
         data.expense,
         ...previous,
       ])
 
-
       setForm({
-
         description: '',
-
-        category:
-          'OperaciÃ³n',
-
+        category: 'Operación',
         amount: '',
-
-        paymentMethod:
-          'Efectivo',
-
-        expenseDate:
-          new Date()
-            .toISOString()
-            .split('T')[0],
-
+        paymentMethod: 'Efectivo',
+        expenseDate: new Date()
+          .toISOString()
+          .split('T')[0],
         notes: '',
-
       })
-
-
     } catch (error) {
-
       console.error(error)
 
       alert(
         error.message ||
         'No se pudo registrar el gasto.'
       )
-
     } finally {
-
       setSaving(false)
-
     }
-
   }
-
 
   // ========================================
   // ELIMINAR GASTO
   // ========================================
 
   async function deleteGasto(id) {
-
-    const confirmed =
-      window.confirm(
-        'Â¿Seguro que quieres eliminar este gasto?'
-      )
+    const confirmed = window.confirm(
+      '¿Seguro que quieres eliminar este gasto?'
+    )
 
     if (!confirmed) {
       return
     }
 
-
     try {
+      const response = await fetch(
+        `${API_URL}/api/expenses/${id}`,
+        {
+          method: 'DELETE',
+        }
+      )
 
-      const response =
-        await fetch(
-          `${API_URL}/api/expenses/${id}`,
-          {
-            method: 'DELETE',
-          }
-        )
-
-
-      const data =
-        await response.json()
-
+      const data = await response.json()
 
       if (!response.ok) {
-
         throw new Error(
-          data.error ||
-          'No se pudo eliminar el gasto.'
+          data.error || 'No se pudo eliminar el gasto.'
         )
-
       }
-
 
       setGastos(previous =>
         previous.filter(
           gasto => gasto.id !== id
         )
       )
-
-
     } catch (error) {
-
       console.error(error)
 
       alert(
         error.message ||
         'No se pudo eliminar el gasto.'
       )
-
     }
-
   }
-
 
   // ========================================
   // TOTALES
   // ========================================
 
-  const totalGastos =
-    gastos.reduce(
-      (total, gasto) =>
-        total +
-        Number(gasto.amount || 0),
-      0
+  const totalGastos = gastos.reduce(
+    (total, gasto) =>
+      total + Number(gasto.amount || 0),
+    0
+  )
+
+  const gastosMes = gastos.filter(gasto => {
+    const date = new Date(gasto.expense_date)
+    const now = new Date()
+
+    return (
+      date.getMonth() === now.getMonth() &&
+      date.getFullYear() === now.getFullYear()
     )
+  })
 
-
-  const gastosMes =
-    gastos.filter(gasto => {
-
-      const date =
-        new Date(gasto.expense_date)
-
-      const now =
-        new Date()
-
-      return (
-        date.getMonth() === now.getMonth() &&
-        date.getFullYear() === now.getFullYear()
-      )
-
-    })
-
-
-  const totalMes =
-    gastosMes.reduce(
-      (total, gasto) =>
-        total +
-        Number(gasto.amount || 0),
-      0
-    )
-
+  const totalMes = gastosMes.reduce(
+    (total, gasto) =>
+      total + Number(gasto.amount || 0),
+    0
+  )
 
   return (
-
     <section className="page">
 
       {/* ================================= */}
@@ -338,21 +224,14 @@ function Gastos() {
       {/* ================================= */}
 
       <div className="page-header">
-
         <div>
-
-          <h2>
-            Gastos
-          </h2>
+          <h2>Gastos</h2>
 
           <p>
             Control y registro de los gastos del negocio.
           </p>
-
         </div>
-
       </div>
-
 
       {/* ================================= */}
       {/* RESUMEN */}
@@ -361,23 +240,15 @@ function Gastos() {
       <div className="stats-grid">
 
         <div className="stat-card">
-
-          <span>
-            Gastos registrados
-          </span>
+          <span>Gastos registrados</span>
 
           <strong>
             {gastos.length}
           </strong>
-
         </div>
 
-
         <div className="stat-card">
-
-          <span>
-            Gastos del mes
-          </span>
+          <span>Gastos del mes</span>
 
           <strong>
             $
@@ -388,15 +259,10 @@ function Gastos() {
               }
             )}
           </strong>
-
         </div>
 
-
         <div className="stat-card">
-
-          <span>
-            Total histÃ³rico
-          </span>
+          <span>Total histórico</span>
 
           <strong>
             $
@@ -407,11 +273,9 @@ function Gastos() {
               }
             )}
           </strong>
-
         </div>
 
       </div>
-
 
       {/* ================================= */}
       {/* FORMULARIO */}
@@ -422,19 +286,14 @@ function Gastos() {
         <div className="card-header">
 
           <div>
-
-            <h3>
-              Registrar gasto
-            </h3>
+            <h3>Registrar gasto</h3>
 
             <p>
               Agrega un nuevo gasto del negocio.
             </p>
-
           </div>
 
         </div>
-
 
         <form
           className="form-grid"
@@ -443,9 +302,7 @@ function Gastos() {
 
           <div className="form-group">
 
-            <label>
-              DescripciÃ³n
-            </label>
+            <label>Descripción</label>
 
             <input
               type="text"
@@ -457,21 +314,17 @@ function Gastos() {
 
           </div>
 
-
           <div className="form-group">
 
-            <label>
-              CategorÃ­a
-            </label>
+            <label>Categoría</label>
 
             <select
               name="category"
               value={form.category}
               onChange={handleChange}
             >
-
-              <option value="OperaciÃ³n">
-                OperaciÃ³n
+              <option value="Operación">
+                Operación
               </option>
 
               <option value="Servicios">
@@ -494,8 +347,8 @@ function Gastos() {
                 Publicidad
               </option>
 
-              <option value="NÃ³mina">
-                NÃ³mina
+              <option value="Nómina">
+                Nómina
               </option>
 
               <option value="Impuestos">
@@ -505,17 +358,13 @@ function Gastos() {
               <option value="Otro">
                 Otro
               </option>
-
             </select>
 
           </div>
 
-
           <div className="form-group">
 
-            <label>
-              Importe
-            </label>
+            <label>Importe</label>
 
             <input
               type="number"
@@ -529,19 +378,15 @@ function Gastos() {
 
           </div>
 
-
           <div className="form-group">
 
-            <label>
-              MÃ©todo de pago
-            </label>
+            <label>Método de pago</label>
 
             <select
               name="paymentMethod"
               value={form.paymentMethod}
               onChange={handleChange}
             >
-
               <option value="Efectivo">
                 Efectivo
               </option>
@@ -554,24 +399,20 @@ function Gastos() {
                 Transferencia
               </option>
 
-              <option value="CrÃ©dito">
-                CrÃ©dito
+              <option value="Crédito">
+                Crédito
               </option>
 
               <option value="Otro">
                 Otro
               </option>
-
             </select>
 
           </div>
 
-
           <div className="form-group">
 
-            <label>
-              Fecha
-            </label>
+            <label>Fecha</label>
 
             <input
               type="date"
@@ -582,12 +423,9 @@ function Gastos() {
 
           </div>
 
-
           <div className="form-group">
 
-            <label>
-              Notas
-            </label>
+            <label>Notas</label>
 
             <input
               type="text"
@@ -599,7 +437,6 @@ function Gastos() {
 
           </div>
 
-
           <div className="form-actions">
 
             <button
@@ -607,11 +444,9 @@ function Gastos() {
               className="primary-button"
               disabled={saving}
             >
-
               {saving
                 ? 'Guardando...'
-                : 'ðŸ’¸ Registrar gasto'}
-
+                : '💰 Registrar gasto'}
             </button>
 
           </div>
@@ -619,7 +454,6 @@ function Gastos() {
         </form>
 
       </div>
-
 
       {/* ================================= */}
       {/* LISTADO */}
@@ -631,9 +465,7 @@ function Gastos() {
 
           <div>
 
-            <h3>
-              Historial de gastos
-            </h3>
+            <h3>Historial de gastos</h3>
 
             <p>
               Registro de todos los gastos realizados.
@@ -642,7 +474,6 @@ function Gastos() {
           </div>
 
         </div>
-
 
         {loading ? (
 
@@ -655,7 +486,7 @@ function Gastos() {
           <div className="empty-state">
 
             <div style={{ fontSize: '40px' }}>
-              ðŸ’¸
+              💰
             </div>
 
             <h3>
@@ -677,31 +508,12 @@ function Gastos() {
               <thead>
 
                 <tr>
-
-                  <th>
-                    Fecha
-                  </th>
-
-                  <th>
-                    DescripciÃ³n
-                  </th>
-
-                  <th>
-                    CategorÃ­a
-                  </th>
-
-                  <th>
-                    MÃ©todo
-                  </th>
-
-                  <th>
-                    Importe
-                  </th>
-
-                  <th>
-                    Acciones
-                  </th>
-
+                  <th>Fecha</th>
+                  <th>Descripción</th>
+                  <th>Categoría</th>
+                  <th>Método</th>
+                  <th>Importe</th>
+                  <th>Acciones</th>
                 </tr>
 
               </thead>
@@ -723,7 +535,6 @@ function Gastos() {
                       </strong>
 
                       {gasto.notes && (
-
                         <small
                           style={{
                             display: 'block',
@@ -733,7 +544,6 @@ function Gastos() {
                         >
                           {gasto.notes}
                         </small>
-
                       )}
 
                     </td>
@@ -767,12 +577,10 @@ function Gastos() {
                       <button
                         className="delete-button"
                         onClick={() =>
-                          deleteGasto(
-                            gasto.id
-                          )
+                          deleteGasto(gasto.id)
                         }
                       >
-                        ðŸ—‘ï¸
+                        🗑️
                       </button>
 
                     </td>
@@ -792,9 +600,7 @@ function Gastos() {
       </div>
 
     </section>
-
   )
-
 }
 
 export default Gastos

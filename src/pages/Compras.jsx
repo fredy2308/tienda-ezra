@@ -1,4 +1,4 @@
-﻿import API_URL from '../api'
+import API_URL from '../api'
 import { useEffect, useState } from 'react'
 
 
@@ -230,7 +230,7 @@ function Compras() {
     if (!form.category.trim()) {
 
       alert(
-        'Escribe la categorÃ­a del producto.'
+        'Escribe la categoría del producto.'
       )
 
       return
@@ -244,7 +244,7 @@ function Compras() {
     ) {
 
       alert(
-        'La cantidad debe ser un nÃºmero entero mayor a cero.'
+        'La cantidad debe ser un número entero mayor a cero.'
       )
 
       return
@@ -258,7 +258,7 @@ function Compras() {
     ) {
 
       alert(
-        'El costo unitario no es vÃ¡lido.'
+        'El costo unitario no es válido.'
       )
 
       return
@@ -272,7 +272,7 @@ function Compras() {
     ) {
 
       alert(
-        'El costo total calculado no es vÃ¡lido.'
+        'El costo total calculado no es válido.'
       )
 
       return
@@ -286,7 +286,7 @@ function Compras() {
     ) {
 
       alert(
-        'El precio de venta no es vÃ¡lido.'
+        'El precio de venta no es válido.'
       )
 
       return
@@ -300,7 +300,7 @@ function Compras() {
     ) {
 
       alert(
-        'El stock mÃ­nimo no es vÃ¡lido.'
+        'El stock mínimo no es válido.'
       )
 
       return
@@ -337,9 +337,9 @@ function Compras() {
 
               quantity,
 
-              // El servidor continÃºa
+              // El servidor continúa
               // recibiendo el costo total.
-              // Ahora lo calculamos aquÃ­.
+              // Ahora lo calculamos aquí.
               totalCost,
 
               price,
@@ -467,7 +467,7 @@ function Compras() {
     const confirmed =
       window.confirm(
 
-        'Â¿EstÃ¡s seguro de eliminar esta compra? Se eliminarÃ¡ tambiÃ©n toda la informaciÃ³n relacionada.'
+        '¿Estás seguro de eliminar esta compra? Se eliminará también toda la información relacionada.'
 
       )
 
@@ -576,7 +576,7 @@ function Compras() {
 
 
   // ========================================
-  // CÃLCULOS DE COMPRA
+  // CÁLCULOS DE COMPRA
   // ========================================
 
   const quantity =
@@ -635,8 +635,8 @@ function Compras() {
 
           <p className="page-description">
 
-            Registra una compra y Ezra actualizarÃ¡
-            automÃ¡ticamente productos e inventario.
+            Registra una compra y Ezra actualizará
+            automáticamente productos e inventario.
 
           </p>
 
@@ -722,7 +722,7 @@ function Compras() {
           <div className="empty-state">
 
             <div className="empty-icon">
-              ðŸŒ¿
+              ⏳
             </div>
 
             <h3>
@@ -736,7 +736,7 @@ function Compras() {
           <div className="empty-state">
 
             <div className="empty-icon">
-              ðŸ§¾
+              🛒
             </div>
 
             <h3>
@@ -744,7 +744,7 @@ function Compras() {
             </h3>
 
             <p>
-              Cuando registres una compra aparecerÃ¡ aquÃ­.
+              Cuando registres una compra aparecerá aquí.
             </p>
 
           </div>
@@ -864,7 +864,7 @@ function Compras() {
 
                         <td>
 
-                          {purchaseQuantity || 'â€”'}
+                          {purchaseQuantity || '—'}
 
                         </td>
 
@@ -897,7 +897,7 @@ function Compras() {
 
                         <td>
 
-                          {purchase.notes || 'â€”'}
+                          {purchase.notes || '—'}
 
                         </td>
 
@@ -959,7 +959,7 @@ function Compras() {
               <div>
 
                 <p className="welcome">
-                  Nueva operaciÃ³n
+                  Nueva operación
                 </p>
 
                 <h3>
@@ -979,7 +979,7 @@ function Compras() {
 
               >
 
-                Ã—
+                ×
 
               </button>
 
@@ -1012,7 +1012,7 @@ function Compras() {
                     </strong>
 
                     <small>
-                      Indica quÃ© producto compraste
+                      Indica qué producto compraste
                     </small>
 
                   </div>
@@ -1052,7 +1052,7 @@ function Compras() {
                 <div className="form-group">
 
                   <label>
-                    CategorÃ­a
+                    Categoría
                   </label>
 
                   <input
@@ -1097,7 +1097,7 @@ function Compras() {
                     </strong>
 
                     <small>
-                      Cantidad y costo de adquisiciÃ³n
+                      Cantidad y costo de adquisición
                     </small>
 
                   </div>
@@ -1215,7 +1215,7 @@ function Compras() {
                     </strong>
 
                     <small>
-                      Configura cÃ³mo se venderÃ¡ el producto
+                      Configura cómo se venderá el producto
                     </small>
 
                   </div>
@@ -1260,7 +1260,7 @@ function Compras() {
                   <div className="form-group">
 
                     <label>
-                      Stock mÃ­nimo
+                      Stock mínimo
                     </label>
 
                     <input
@@ -1363,7 +1363,7 @@ function Compras() {
                       handleChange
                     }
 
-                    placeholder="InformaciÃ³n adicional..."
+                    placeholder="Información adicional..."
 
                     rows="3"
 
@@ -1375,7 +1375,7 @@ function Compras() {
 
 
               {/* =================================
-                  PREVISUALIZACIÃ“N
+                  PREVISUALIZACIÓN
               ================================== */}
 
               {quantity > 0 && (
@@ -1383,18 +1383,18 @@ function Compras() {
                 <div className="transformation-info">
 
                   <div className="transformation-info-icon">
-                    ðŸŒ±
+                    📦
                   </div>
 
                   <div>
 
                     <h3>
-                      Entrada automÃ¡tica
+                      Entrada automática
                     </h3>
 
                     <p>
 
-                      Se agregarÃ¡n{' '}
+                      Se agregarán{' '}
 
                       <strong>
                         {quantity}

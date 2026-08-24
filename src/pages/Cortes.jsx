@@ -1,4 +1,4 @@
-﻿import API_URL from '../api'
+import API_URL from '../api'
 import { useEffect, useMemo, useState } from 'react'
 
 function Cortes() {
@@ -50,7 +50,7 @@ function Cortes() {
   function formatDate(value) {
 
     if (!value) {
-      return 'â€”'
+      return '—'
     }
 
     const dateObject = new Date(
@@ -74,7 +74,7 @@ function Cortes() {
 
 
   // ========================================
-  // CARGAR INFORMACIÃ“N
+  // CARGAR INFORMACIÓN
   // ========================================
 
   useEffect(() => {
@@ -92,7 +92,7 @@ function Cortes() {
 
 
       // ==================================
-      // RESUMEN DEL DÃA
+      // RESUMEN DEL DÍA
       // ==================================
 
       const summaryResponse = await fetch(
@@ -184,7 +184,7 @@ function Cortes() {
 
       alert(
         error.message ||
-        'No se pudo cargar la informaciÃ³n de cortes.'
+        'No se pudo cargar la información de cortes.'
       )
 
 
@@ -224,7 +224,7 @@ function Cortes() {
 
 
     // ==================================
-    // VENTAS POR MÃ‰TODO DE PAGO
+    // VENTAS POR MÉTODO DE PAGO
     // ==================================
 
     let cashSales = 0
@@ -262,9 +262,9 @@ function Cortes() {
         } else if (
           name === 'tarjeta' ||
           name === 'credito' ||
-          name === 'crÃ©dito' ||
+          name === 'crédito' ||
           name === 'debito' ||
-          name === 'dÃ©bito'
+          name === 'débito'
         ) {
 
           cardSales += total
@@ -452,7 +452,7 @@ function Cortes() {
     ) {
 
       alert(
-        'El efectivo contado no es vÃ¡lido.'
+        'El efectivo contado no es válido.'
       )
 
       return
@@ -467,7 +467,7 @@ function Cortes() {
     if (cuts.length > 0) {
 
       alert(
-        `Ya existe un corte registrado para el dÃ­a ${formatDate(date)}.`
+        `Ya existe un corte registrado para el día ${formatDate(date)}.`
       )
 
       return
@@ -577,7 +577,7 @@ function Cortes() {
         <div>
 
           <p className="welcome">
-            Ezra â€” Tienda de Plantas y DecoraciÃ³n
+            Ezra — Tienda de Plantas y Decoración
           </p>
 
           <h2>
@@ -585,7 +585,7 @@ function Cortes() {
           </h2>
 
           <p className="page-description">
-            Consulta las ventas del dÃ­a,
+            Consulta las ventas del día,
             verifica el efectivo y registra
             el cierre de caja.
           </p>
@@ -674,7 +674,7 @@ function Cortes() {
           <div className="empty-state">
 
             <div className="empty-icon">
-              ðŸ’°
+              ⏳
             </div>
 
             <h3>
@@ -682,7 +682,7 @@ function Cortes() {
             </h3>
 
             <p>
-              Estamos consultando las ventas y gastos del dÃ­a.
+              Estamos consultando las ventas y gastos del día.
             </p>
 
           </div>
@@ -702,7 +702,7 @@ function Cortes() {
             <div>
 
               <span>
-                Ventas del dÃ­a
+                Ventas del día
               </span>
 
               <strong>
@@ -761,7 +761,7 @@ function Cortes() {
 
           {/* ==================================
               CONTENIDO
-          =================================== */}
+          ================================== */}
 
           <div
             style={{
@@ -933,7 +933,7 @@ function Cortes() {
                 >
 
                   <span>
-                    Gastos del dÃ­a
+                    Gastos del día
                   </span>
 
                   <strong
@@ -1038,11 +1038,11 @@ function Cortes() {
                 <div>
 
                   <h3>
-                    ðŸ” Cerrar caja
+                    💰 Cerrar caja
                   </h3>
 
                   <p>
-                    Registra el efectivo fÃ­sico encontrado.
+                    Registra el efectivo físico encontrado.
                   </p>
 
                 </div>
@@ -1081,7 +1081,7 @@ function Cortes() {
                     fontSize: '11px',
                   }}
                 >
-                  Cantidad de dinero fÃ­sico que realmente tienes en caja.
+                  Cantidad de dinero físico que realmente tienes en caja.
                 </small>
 
               </div>
@@ -1171,7 +1171,7 @@ function Cortes() {
                     {difference > 0
                       ? '+'
                       : difference < 0
-                        ? 'âˆ’'
+                        ? '-'
                         : ''}
 
                     {formatCurrency(
@@ -1215,7 +1215,7 @@ function Cortes() {
               </div>
 
 
-              {/* BOTÃ“N */}
+              {/* BOTÓN */}
 
               <button
                 className="primary-button"
@@ -1240,8 +1240,8 @@ function Cortes() {
                 {saving
                   ? 'Registrando corte...'
                   : cuts.length > 0
-                    ? 'âœ“ Corte ya registrado'
-                    : 'ðŸ”’ Registrar corte'}
+                    ? '✓ Corte ya registrado'
+                    : '💰 Registrar corte'}
 
               </button>
 
@@ -1283,7 +1283,7 @@ function Cortes() {
               <div className="empty-state">
 
                 <div className="empty-icon">
-                  ðŸ“‹
+                  📋
                 </div>
 
                 <h3>
@@ -1291,7 +1291,7 @@ function Cortes() {
                 </h3>
 
                 <p>
-                  TodavÃ­a no se ha registrado un corte para esta fecha.
+                  Todavía no se ha registrado un corte para esta fecha.
                 </p>
 
               </div>
@@ -1488,7 +1488,7 @@ function Cortes() {
                               {cutDifference > 0
                                 ? '+'
                                 : cutDifference < 0
-                                  ? 'âˆ’'
+                                  ? '-'
                                   : ''}
 
                               {formatCurrency(

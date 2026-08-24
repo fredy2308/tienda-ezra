@@ -1,94 +1,61 @@
-﻿import API_URL from '../api'
+import API_URL from '../api'
 import { useEffect, useState } from 'react'
 
-
 function Transformaciones() {
+  // ========================================
+  // ESTADOS
+  // ========================================
 
   const [purchases, setPurchases] = useState([])
-
   const [products, setProducts] = useState([])
-
   const [loading, setLoading] = useState(true)
-
+  const [saving, setSaving] = useState(false)
   const [showForm, setShowForm] = useState(false)
-
   const [error, setError] = useState('')
 
-
   const [form, setForm] = useState({
-
     purchaseId: '',
-
     sourceProductId: '',
-
     sourceQuantity: 1,
-
     sourceDescription: '',
-
     sourceCost: '',
-
     notes: '',
-
   })
 
-
   const [outputs, setOutputs] = useState([])
-
 
   // ========================================
   // CARGAR COMPRAS Y PRODUCTOS
   // ========================================
 
   async function loadData() {
-
     try {
-
       setLoading(true)
-
       setError('')
 
-
-      const [
-        purchasesResponse,
-        productsResponse,
-      ] = await Promise.all([
-
-        fetch(
-          `${API_URL}/api/purchases`
-        ),
-
-        fetch(
-          `${API_URL}/api/products`
-        ),
-
-      ])
-
+      const [purchasesResponse, productsResponse] =
+        await Promise.all([
+          fetch(`${API_URL}/api/purchases`),
+          fetch(`${API_URL}/api/products`),
+        ])
 
       if (!purchasesResponse.ok) {
-
         throw new Error(
           'No se pudieron cargar las compras.'
         )
-
       }
 
-
       if (!productsResponse.ok) {
-
         throw new Error(
           'No se pudieron cargar los productos.'
         )
-
       }
-
 
       const purchasesData =
         await purchasesResponse.json()
 
-
       const productsData =
         await productsResponse.json()
-
 
       setPurchases(
         Array.isArray(purchasesData)
@@ -96,213 +63,164 @@ function Transformaciones() {
           : []
       )
 
-
       setProducts(
         Array.isArray(productsData)
           ? productsData
           : []
       )
-
-
     } catch (error) {
-
       console.error(
         'Error cargando transformaciones:',
         error
       )
 
-
       setError(
         error.message ||
-        'No se pudieron cargar los datos.'
+          'No se pudieron cargar los datos.'
       )
-
     } finally {
-
       setLoading(false)
-
     }
-
   }
 
-
   useEffect(() => {
-
     loadData()
-
   }, [])
 
+  // ========================================
+  // FORMULARIO VACÍO
+  // ========================================
+
+  function getEmptyForm() {
+    return {
+      purchaseId: '',
+      sourceProductId: '',
+      sourceQuantity: 1,
+      sourceDescription: '',
+      sourceCost: '',
+      notes: '',
+    }
+  }
+
+  // ========================================
+  // ABRIR FORMULARIO
+  // ========================================
+
+  function openForm() {
+    setError('')
+    setForm(getEmptyForm())
+    setOutputs([])
+    setShowForm(true)
+  }
+
+  // ========================================
+  // CERRAR FORMULARIO
+  // ========================================
+
+  function closeForm() {
+    if (saving) return
+
+    setShowForm(false)
+    setForm(getEmptyForm())
+    setOutputs([])
+  }
 
   // ========================================
   // SELECCIONAR COMPRA
   // ========================================
 
   function handlePurchaseChange(event) {
+    const purchaseId = event.target.value
 
-    const purchaseId =
-      event.target.value
-
-
-    const purchase =
-      purchases.find(
-        item =>
-          String(item.id) ===
-          String(purchaseId)
-      )
-
+    const purchase = purchases.find(
+      (item) =>
+        String(item.id) === String(purchaseId)
+    )
 
     if (!purchase) {
-
-      setForm({
-
-        purchaseId: '',
-
-        sourceProductId: '',
-
-        sourceQuantity: 1,
-
-        sourceDescription: '',
-
-        sourceCost: '',
-
-        notes: '',
-
-      })
-
-
+      setForm(getEmptyForm())
       setOutputs([])
-
       return
-
     }
 
-
-    setForm(current => ({
-
+    setForm((current) => ({
       ...current,
-
       purchaseId,
-
       sourceProductId: '',
-
       sourceQuantity: 1,
-
       sourceDescription:
         purchase.description || '',
-
       sourceCost: '',
-
     }))
 
-
     setOutputs([])
-
   }
-
 
   // ========================================
   // SELECCIONAR PRODUCTO DE ORIGEN
   // ========================================
 
   function handleSourceProductChange(event) {
+    const sourceProductId = event.target.value
 
-    const sourceProductId =
-      event.target.value
+    const product = products.find(
+      (item) =>
+        String(item.id) ===
+        String(sourceProductId)
+    )
 
-
-    const product =
-      products.find(
-        item =>
-          String(item.id) ===
-          String(sourceProductId)
-      )
-
-
-    setForm(current => ({
-
+    setForm((current) => ({
       ...current,
-
       sourceProductId,
-
-      sourceDescription:
-        product
-          ? product.name
-          : '',
-
+      sourceDescription: product
+        ? product.name
+        : '',
     }))
-
   }
-
 
   // ========================================
   // CAMBIAR CANTIDAD DE ORIGEN
   // ========================================
 
   function handleSourceQuantityChange(event) {
+    const value = event.target.value
 
-    const sourceQuantity =
-      Number(event.target.value)
-
-
-    setForm(current => ({
-
+    setForm((current) => ({
       ...current,
-
-      sourceQuantity,
-
+      sourceQuantity:
+        value === '' ? '' : Number(value),
     }))
-
   }
-
 
   // ========================================
   // AGREGAR RESULTADO
   // ========================================
 
   function addOutput() {
-
-    setOutputs(current => [
-
+    setOutputs((current) => [
       ...current,
-
       {
-
         productId: '',
-
         name: '',
-
         category: '',
-
         unit: 'pieza',
-
         quantity: 1,
-
         salePrice: '',
-
       },
-
     ])
-
   }
-
 
   // ========================================
   // ELIMINAR RESULTADO
   // ========================================
 
   function removeOutput(index) {
-
-    setOutputs(current =>
-
+    setOutputs((current) =>
       current.filter(
-        (_, i) =>
-          i !== index
+        (_, i) => i !== index
       )
-
     )
-
   }
-
 
   // ========================================
   // CAMBIAR RESULTADO
@@ -313,34 +231,60 @@ function Transformaciones() {
     field,
     value
   ) {
-
-    setOutputs(current =>
-
-      current.map(
-        (output, i) => {
-
-          if (i !== index) {
-
-            return output
-
-          }
-
-
-          return {
-
-            ...output,
-
-            [field]: value,
-
-          }
-
+    setOutputs((current) =>
+      current.map((output, i) => {
+        if (i !== index) {
+          return output
         }
-      )
 
+        return {
+          ...output,
+          [field]: value,
+        }
+      })
     )
-
   }
 
+  // ========================================
+  // SELECCIONAR PRODUCTO RESULTANTE
+  // ========================================
+
+  function handleOutputProductChange(
+    index,
+    productId
+  ) {
+    const product = products.find(
+      (item) =>
+        String(item.id) ===
+        String(productId)
+    )
+
+    setOutputs((current) =>
+      current.map((output, i) => {
+        if (i !== index) {
+          return output
+        }
+
+        if (!product) {
+          return {
+            ...output,
+            productId: '',
+            name: '',
+            category: '',
+            unit: 'pieza',
+          }
+        }
+
+        return {
+          ...output,
+          productId: String(product.id),
+          name: product.name || '',
+          category: product.category || '',
+          unit: product.unit || 'pieza',
+        }
+      })
+    )
+  }
 
   // ========================================
   // PRODUCTO DE ORIGEN
@@ -348,42 +292,32 @@ function Transformaciones() {
 
   const sourceProduct =
     products.find(
-      product =>
+      (product) =>
         String(product.id) ===
         String(form.sourceProductId)
     )
-
 
   // ========================================
   // COSTO UNITARIO
   // ========================================
 
   const sourceUnitCost =
-    Number(
-      sourceProduct?.cost || 0
-    )
-
+    Number(sourceProduct?.cost || 0)
 
   // ========================================
   // CANTIDAD ORIGEN
   // ========================================
 
   const sourceQuantity =
-    Number(
-      form.sourceQuantity || 0
-    )
-
+    Number(form.sourceQuantity || 0)
 
   // ========================================
   // COSTO TOTAL TRANSFORMADO
   // ========================================
 
-  const sourceCost =
-    sourceProduct
-      ? sourceUnitCost *
-        sourceQuantity
-      : 0
-
+  const sourceCost = sourceProduct
+    ? sourceUnitCost * sourceQuantity
+    : 0
 
   // ========================================
   // VALOR TOTAL DE VENTA
@@ -391,177 +325,133 @@ function Transformaciones() {
 
   const totalProductionValue =
     outputs.reduce(
-
       (total, output) => {
-
         const quantity =
-          Number(
-            output.quantity || 0
-          )
-
+          Number(output.quantity || 0)
 
         const salePrice =
-          Number(
-            output.salePrice || 0
-          )
-
+          Number(output.salePrice || 0)
 
         return (
           total +
-          quantity *
-          salePrice
+          quantity * salePrice
         )
-
       },
-
       0
-
     )
 
-
   // ========================================
-  // PORCENTAJE
+  // PORCENTAJE DE PARTICIPACIÓN
   // ========================================
 
   function getPercentage(output) {
-
-    if (
-      totalProductionValue <= 0
-    ) {
-
+    if (totalProductionValue <= 0) {
       return 0
-
     }
 
+    const quantity =
+      Number(output.quantity || 0)
 
-    const outputValue =
-      Number(output.quantity || 0) *
+    const salePrice =
       Number(output.salePrice || 0)
 
+    const outputValue =
+      quantity * salePrice
 
     return (
-      outputValue /
-      totalProductionValue *
+      (outputValue /
+        totalProductionValue) *
       100
     )
-
   }
 
-
   // ========================================
-  // COSTO CRUDO
+  // COSTO PROPORCIONAL SIN REDONDEAR
   // ========================================
 
   function calculateRawAllocatedCost(
     output
   ) {
-
     if (
       totalProductionValue <= 0 ||
       sourceCost <= 0
     ) {
-
       return 0
-
     }
 
+    const quantity =
+      Number(output.quantity || 0)
 
-    const outputValue =
-      Number(output.quantity || 0) *
+    const salePrice =
       Number(output.salePrice || 0)
 
+    const outputValue =
+      quantity * salePrice
 
     return (
       sourceCost *
-      (
-        outputValue /
-        totalProductionValue
-      )
+      (outputValue /
+        totalProductionValue)
     )
-
   }
-
 
   // ========================================
   // COSTOS DISTRIBUIDOS
   // ========================================
+  //
+  // Se redondean los resultados a centavos.
+  // El último resultado recibe la diferencia
+  // para que la suma sea exactamente igual
+  // al costo de origen.
+  // ========================================
 
   const allocatedCosts =
-    outputs.map(
-      (output, index) => {
-
-        const rawCost =
-          calculateRawAllocatedCost(
-            output
-          )
-
-
-        if (
-          index <
-          outputs.length - 1
-        ) {
-
-          return Number(
-            rawCost.toFixed(2)
-          )
-
-        }
-
-
-        const previousTotal =
-          outputs
-            .slice(
-              0,
-              index
-            )
-            .reduce(
-              (
-                total,
-                previousOutput,
-                previousIndex
-              ) => {
-
-                if (
-                  previousIndex <
-                  outputs.length - 1
-                ) {
-
-                  return (
-                    total +
-                    Number(
-                      calculateRawAllocatedCost(
-                        previousOutput
-                      ).toFixed(2)
-                    )
-                  )
-
-                }
-
-
-                return total
-
-              },
-
-              0
-
-            )
-
-
-        const remaining =
-          sourceCost -
-          previousTotal
-
-
-        return Number(
-          Math.max(
-            0,
-            remaining
-          ).toFixed(2)
+    outputs.map((output, index) => {
+      const rawCost =
+        calculateRawAllocatedCost(
+          output
         )
 
+      if (
+        index <
+        outputs.length - 1
+      ) {
+        return Number(
+          rawCost.toFixed(2)
+        )
       }
-    )
 
+      const previousTotal =
+        outputs
+          .slice(0, index)
+          .reduce(
+            (
+              total,
+              previousOutput
+            ) => {
+              return (
+                total +
+                Number(
+                  calculateRawAllocatedCost(
+                    previousOutput
+                  ).toFixed(2)
+                )
+              )
+            },
+            0
+          )
+
+      const remaining =
+        sourceCost -
+        previousTotal
+
+      return Number(
+        Math.max(
+          0,
+          remaining
+        ).toFixed(2)
+      )
+    })
 
   // ========================================
   // COSTO RESULTADO
@@ -571,24 +461,19 @@ function Transformaciones() {
     output,
     index
   ) {
-
     if (
-      allocatedCosts[index] !== undefined
+      allocatedCosts[index] !==
+      undefined
     ) {
-
       return allocatedCosts[index]
-
     }
-
 
     return Number(
       calculateRawAllocatedCost(
         output
       ).toFixed(2)
     )
-
   }
-
 
   // ========================================
   // TOTAL ASIGNADO
@@ -596,14 +481,10 @@ function Transformaciones() {
 
   const totalAllocatedCost =
     allocatedCosts.reduce(
-
       (total, cost) =>
-        total + cost,
-
+        total + Number(cost || 0),
       0
-
     )
-
 
   // ========================================
   // DIFERENCIA
@@ -613,234 +494,265 @@ function Transformaciones() {
     sourceCost -
     totalAllocatedCost
 
-
   const isBalanced =
     Math.abs(difference) < 0.01
-
 
   // ========================================
   // MONEDA
   // ========================================
 
   function money(value) {
-
     return new Intl.NumberFormat(
       'es-MX',
       {
-
         style: 'currency',
-
         currency: 'MXN',
-
       }
     ).format(
       Number(value) || 0
     )
-
   }
 
-
   // ========================================
-  // GUARDAR
+  // VALIDAR RESULTADOS
   // ========================================
 
-  async function handleSubmit(event) {
-
-    event.preventDefault()
-
-
-    if (!form.purchaseId) {
-
-      alert(
-        'Selecciona una compra.'
-      )
-
-      return
-
-    }
-
-
-    if (!form.sourceProductId) {
-
-      alert(
-        'Selecciona el producto de origen.'
-      )
-
-      return
-
-    }
-
-
-    if (
-      !Number.isInteger(sourceQuantity) ||
-      sourceQuantity <= 0
-    ) {
-
-      alert(
-        'La cantidad a transformar debe ser un nÃºmero entero mayor a cero.'
-      )
-
-      return
-
-    }
-
-
-    if (!sourceProduct) {
-
-      alert(
-        'El producto de origen no existe.'
-      )
-
-      return
-
-    }
-
-
-    if (
-      sourceQuantity >
-      Number(sourceProduct.stock)
-    ) {
-
-      alert(
-        `Stock insuficiente. Disponible: ${sourceProduct.stock} ${sourceProduct.unit}.`
-      )
-
-      return
-
-    }
-
-
-    if (
-      !Number.isFinite(sourceCost) ||
-      sourceCost <= 0
-    ) {
-
-      alert(
-        'El costo de compra del producto de origen no es vÃ¡lido.'
-      )
-
-      return
-
-    }
-
-
+  function validateOutputs() {
     if (outputs.length === 0) {
-
       alert(
         'Agrega al menos un producto resultante.'
       )
-
-      return
-
+      return false
     }
 
-
     for (
-      const output of outputs
+      let index = 0;
+      index < outputs.length;
+      index++
     ) {
+      const output =
+        outputs[index]
 
-      if (
-        !String(output.name || '').trim()
-      ) {
-
+      if (!output.productId) {
         alert(
-          'Escribe el nombre de todos los productos resultantes.'
+          `Selecciona el producto resultante #${
+            index + 1
+          }.`
         )
-
-        return
-
+        return false
       }
 
-
       if (
-        !String(output.category || '').trim()
+        !String(
+          output.name || ''
+        ).trim()
       ) {
-
         alert(
-          'Escribe la categorÃ­a de todos los productos resultantes.'
+          `El producto resultante #${
+            index + 1
+          } no tiene nombre.`
         )
-
-        return
-
+        return false
       }
 
-
       if (
-        !String(output.unit || '').trim()
+        !String(
+          output.category || ''
+        ).trim()
       ) {
-
         alert(
-          'Selecciona la unidad de todos los productos resultantes.'
+          `El producto resultante #${
+            index + 1
+          } no tiene categoría.`
         )
-
-        return
-
+        return false
       }
 
+      if (
+        !String(
+          output.unit || ''
+        ).trim()
+      ) {
+        alert(
+          `El producto resultante #${
+            index + 1
+          } no tiene unidad.`
+        )
+        return false
+      }
 
       const quantity =
         Number(output.quantity)
 
-
       const salePrice =
         Number(output.salePrice)
 
-
       if (
-        !Number.isInteger(quantity) ||
+        !Number.isInteger(
+          quantity
+        ) ||
         quantity <= 0
       ) {
-
         alert(
-          'La cantidad de cada resultado debe ser un nÃºmero entero mayor a cero.'
+          `La cantidad del producto resultante #${
+            index + 1
+          } debe ser un número entero mayor a cero.`
         )
-
-        return
-
+        return false
       }
-
 
       if (
-        !Number.isFinite(salePrice) ||
+        !Number.isFinite(
+          salePrice
+        ) ||
         salePrice < 0
       ) {
-
         alert(
-          'El precio de venta no puede ser negativo.'
+          `El precio de venta del producto resultante #${
+            index + 1
+          } no es válido.`
         )
-
-        return
-
+        return false
       }
-
     }
 
+    return true
+  }
+
+  // ========================================
+  // GUARDAR TRANSFORMACIÓN
+  // ========================================
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+
+    if (saving) {
+      return
+    }
+
+    // ----------------------------------------
+    // COMPRA
+    // ----------------------------------------
+
+    if (!form.purchaseId) {
+      alert(
+        'Selecciona una compra.'
+      )
+      return
+    }
+
+    // ----------------------------------------
+    // PRODUCTO DE ORIGEN
+    // ----------------------------------------
+
+    if (!form.sourceProductId) {
+      alert(
+        'Selecciona el producto de origen.'
+      )
+      return
+    }
+
+    if (!sourceProduct) {
+      alert(
+        'El producto de origen no existe.'
+      )
+      return
+    }
+
+    // ----------------------------------------
+    // CANTIDAD
+    // ----------------------------------------
+
+    if (
+      !Number.isInteger(
+        sourceQuantity
+      ) ||
+      sourceQuantity <= 0
+    ) {
+      alert(
+        'La cantidad a transformar debe ser un número entero mayor a cero.'
+      )
+      return
+    }
+
+    // ----------------------------------------
+    // STOCK
+    // ----------------------------------------
+
+    const availableStock =
+      Number(
+        sourceProduct.stock || 0
+      )
+
+    if (
+      sourceQuantity >
+      availableStock
+    ) {
+      alert(
+        `Stock insuficiente. Disponible: ${availableStock} ${sourceProduct.unit || 'unidades'}.`
+      )
+      return
+    }
+
+    // ----------------------------------------
+    // COSTO
+    // ----------------------------------------
+
+    if (
+      !Number.isFinite(
+        sourceCost
+      ) ||
+      sourceCost <= 0
+    ) {
+      alert(
+        'El costo del producto de origen no es válido.'
+      )
+      return
+    }
+
+    // ----------------------------------------
+    // RESULTADOS
+    // ----------------------------------------
+
+    if (
+      !validateOutputs()
+    ) {
+      return
+    }
+
+    // ----------------------------------------
+    // VALOR DE PRODUCCIÓN
+    // ----------------------------------------
 
     if (
       totalProductionValue <= 0
     ) {
-
       alert(
         'El valor total de venta de los resultados debe ser mayor a cero.'
       )
-
       return
-
     }
 
+    // ----------------------------------------
+    // BALANCE
+    // ----------------------------------------
 
     if (!isBalanced) {
-
       alert(
-        'El costo distribuido no coincide con el costo transformado.'
+        `El costo distribuido no coincide con el costo transformado. Diferencia: ${money(
+          difference
+        )}`
       )
-
       return
-
     }
 
-
     try {
+      setSaving(true)
+      setError('')
+
+      // --------------------------------------
+      // PREPARAR RESULTADOS
+      // --------------------------------------
 
       const preparedOutputs =
         outputs.map(
@@ -848,13 +760,10 @@ function Transformaciones() {
             output,
             index
           ) => ({
-
             productId:
-              output.productId
-                ? Number(
-                    output.productId
-                  )
-                : null,
+              Number(
+                output.productId
+              ),
 
             name:
               String(
@@ -882,142 +791,152 @@ function Transformaciones() {
               ),
 
             allocatedCost:
-              calculateAllocatedCost(
-                output,
-                index
+              Number(
+                calculateAllocatedCost(
+                  output,
+                  index
+                ).toFixed(2)
               ),
-
           })
         )
 
+      // --------------------------------------
+      // DATOS A ENVIAR
+      // --------------------------------------
+
+      const payload = {
+        purchaseId:
+          form.purchaseId
+            ? Number(
+                form.purchaseId
+              )
+            : null,
+
+        sourceProductId:
+          Number(
+            form.sourceProductId
+          ),
+
+        sourceQuantity:
+          sourceQuantity,
+
+        sourceDescription:
+          sourceProduct.name,
+
+        sourceCost:
+          Number(
+            sourceCost.toFixed(2)
+          ),
+
+        notes:
+          String(
+            form.notes || ''
+          ).trim(),
+
+        outputs:
+          preparedOutputs,
+      }
+
+      console.log(
+        'Enviando transformación:',
+        payload
+      )
+
+      // --------------------------------------
+      // PETICIÓN
+      // --------------------------------------
 
       const response =
         await fetch(
           `${API_URL}/api/transformations`,
           {
-
             method: 'POST',
 
             headers: {
-
               'Content-Type':
                 'application/json',
-
             },
 
-            body: JSON.stringify({
-
-              purchaseId:
-                form.purchaseId
-                  ? Number(
-                      form.purchaseId
-                    )
-                  : null,
-
-              sourceProductId:
-                Number(
-                  form.sourceProductId
-                ),
-
-              sourceQuantity:
-                sourceQuantity,
-
-              sourceDescription:
-                sourceProduct.name,
-
-              sourceCost:
-                sourceCost,
-
-              notes:
-                form.notes,
-
-              outputs:
-                preparedOutputs,
-
-            }),
-
+            body:
+              JSON.stringify(
+                payload
+              ),
           }
         )
 
+      // --------------------------------------
+      // RESPUESTA
+      // --------------------------------------
 
-      const data =
-        await response.json()
+      let data = {}
 
-
-      if (!response.ok) {
-
-        throw new Error(
-          data.error ||
-          'No se pudo registrar la transformaciÃ³n.'
-        )
-
+      try {
+        data =
+          await response.json()
+      } catch {
+        data = {}
       }
 
+      if (!response.ok) {
+        throw new Error(
+          data.error ||
+            'No se pudo registrar la transformación.'
+        )
+      }
+
+      // --------------------------------------
+      // ÉXITO
+      // --------------------------------------
 
       alert(
-        'TransformaciÃ³n registrada correctamente.'
+        'Transformación registrada correctamente.'
       )
-
 
       setShowForm(false)
 
-
-      setForm({
-
-        purchaseId: '',
-
-        sourceProductId: '',
-
-        sourceQuantity: 1,
-
-        sourceDescription: '',
-
-        sourceCost: '',
-
-        notes: '',
-
-      })
-
+      setForm(
+        getEmptyForm()
+      )
 
       setOutputs([])
 
-
       await loadData()
-
-
     } catch (error) {
-
       console.error(
-        'Error registrando transformaciÃ³n:',
+        'Error registrando transformación:',
         error
       )
 
+      setError(
+        error.message ||
+          'No se pudo registrar la transformación.'
+      )
 
       alert(
         error.message ||
-        'No se pudo registrar la transformaciÃ³n.'
+          'No se pudo registrar la transformación.'
       )
-
+    } finally {
+      setSaving(false)
     }
-
   }
-
 
   // ========================================
   // RENDER
   // ========================================
 
   return (
-
     <section className="products-page">
 
+      {/* ==================================
+          ENCABEZADO
+      ================================== */}
 
       <div className="products-header">
 
         <div>
-
           <p className="welcome">
-            ProducciÃ³n e inventario
+            Producción e inventario
           </p>
 
           <h2>
@@ -1025,67 +944,67 @@ function Transformaciones() {
           </h2>
 
           <p className="page-description">
-            Convierte tus productos de origen en nuevos productos listos para vender.
+            Convierte tus productos de origen
+            en nuevos productos listos para
+            vender.
           </p>
-
         </div>
 
-
         <button
-
+          type="button"
           className="primary-button"
-
-          onClick={() =>
-            setShowForm(true)
-          }
-
+          onClick={openForm}
+          disabled={loading}
         >
-
-          + Nueva transformaciÃ³n
-
+          + Nueva transformación
         </button>
 
       </div>
 
+      {/* ==================================
+          ERROR
+      ================================== */}
 
       {error && (
-
         <div className="error-message">
-
           {error}
-
         </div>
-
       )}
 
+      {/* ==================================
+          INFORMACIÓN
+      ================================== */}
 
       <div className="panel transformation-info">
 
         <div className="transformation-info-icon">
-          ðŸŒ±
+          🔄
         </div>
 
         <div>
-
           <h3>
-            Productos resultantes independientes
+            Transformación de productos
           </h3>
 
           <p>
-            Cada resultado de una transformaciÃ³n puede ser un producto diferente, con su propio nombre, unidad, costo y precio de venta.
+            Selecciona un producto de origen,
+            indica cuánto vas a transformar y
+            distribuye su costo entre los
+            productos resultantes.
           </p>
-
         </div>
 
       </div>
 
+      {/* ==================================
+          CARGANDO
+      ================================== */}
 
       {loading && (
-
         <div className="empty-state">
 
           <div className="empty-icon">
-            â³
+            ⏳
           </div>
 
           <h3>
@@ -1093,50 +1012,82 @@ function Transformaciones() {
           </h3>
 
         </div>
-
       )}
 
+      {/* ==================================
+          SIN DATOS
+      ================================== */}
+
+      {!loading &&
+        products.length === 0 && (
+          <div className="empty-state">
+
+            <div className="empty-icon">
+              🌱
+            </div>
+
+            <h3>
+              No hay productos
+            </h3>
+
+            <p>
+              Primero registra productos en
+              Inventario.
+            </p>
+
+          </div>
+        )}
+
+      {/* ==================================
+          MODAL
+      ================================== */}
 
       {showForm && (
-
-        <div className="modal-overlay">
+        <div
+          className="modal-overlay"
+          onMouseDown={(event) => {
+            if (
+              event.target ===
+              event.currentTarget
+            ) {
+              closeForm()
+            }
+          }}
+        >
 
           <div className="modal transformation-modal">
 
+            {/* ==============================
+                HEADER MODAL
+            ============================== */}
 
             <div className="modal-header">
 
               <div>
-
                 <p className="welcome">
-                  Nueva operaciÃ³n
+                  Nueva operación
                 </p>
 
                 <h3>
                   Transformar producto
                 </h3>
-
               </div>
 
-
               <button
-
                 type="button"
-
                 className="modal-close"
-
-                onClick={() =>
-                  setShowForm(false)
-                }
-
+                onClick={closeForm}
+                disabled={saving}
+                aria-label="Cerrar"
               >
-
-                Ã—
-
+                ×
               </button>
 
             </div>
 
+            {/* ==============================
+                FORMULARIO
+            ============================== */}
 
             <form
               onSubmit={
@@ -1144,9 +1095,8 @@ function Transformaciones() {
               }
             >
 
-
               {/* =================================
-                  ORIGEN
+                  SECCIÓN 1 - ORIGEN
               ================================= */}
 
               <div className="form-section">
@@ -1158,19 +1108,19 @@ function Transformaciones() {
                   </span>
 
                   <div>
-
                     <strong>
                       Producto de origen
                     </strong>
 
                     <small>
-                      Selecciona el producto que vas a transformar
+                      Selecciona el producto que
+                      vas a transformar
                     </small>
-
                   </div>
 
                 </div>
 
+                {/* COMPRA */}
 
                 <div className="form-group">
 
@@ -1179,50 +1129,44 @@ function Transformaciones() {
                   </label>
 
                   <select
-
                     value={
                       form.purchaseId
                     }
-
                     onChange={
                       handlePurchaseChange
                     }
-
+                    disabled={saving}
                   >
 
                     <option value="">
                       Seleccionar compra...
                     </option>
 
-
                     {purchases.map(
-                      purchase => (
-
+                      (purchase) => (
                         <option
-
                           key={
                             purchase.id
                           }
-
                           value={
                             purchase.id
                           }
-
                         >
-
                           #{purchase.id}
-                          {' Â· '}
-                          {purchase.description}
-                          {' Â· '}
+                          {' · '}
+                          {
+                            purchase.description ||
+                            'Compra'
+                          }
+                          {' · '}
                           {money(
                             purchase.total_cost
                           )}
-                          {' Â· '}
-                          {purchase.quantity || 1}
+                          {' · '}
+                          {purchase.quantity ||
+                            1}
                           {' unidades'}
-
                         </option>
-
                       )
                     )}
 
@@ -1230,9 +1174,9 @@ function Transformaciones() {
 
                 </div>
 
+                {/* PRODUCTO DE ORIGEN */}
 
                 {form.purchaseId && (
-
                   <>
 
                     <div className="form-group">
@@ -1242,49 +1186,44 @@ function Transformaciones() {
                       </label>
 
                       <select
-
                         value={
                           form.sourceProductId
                         }
-
                         onChange={
                           handleSourceProductChange
                         }
-
+                        disabled={saving}
                       >
 
                         <option value="">
                           Seleccionar producto...
                         </option>
 
-
                         {products.map(
-                          product => (
-
+                          (product) => (
                             <option
-
                               key={
                                 product.id
                               }
-
                               value={
                                 product.id
                               }
-
                             >
-
                               {product.name}
-                              {' Â· Stock: '}
-                              {product.stock}
+                              {' · Stock: '}
+                              {
+                                product.stock
+                              }
                               {' '}
-                              {product.unit}
-                              {' Â· Costo: '}
+                              {
+                                product.unit ||
+                                'pieza'
+                              }
+                              {' · Costo: '}
                               {money(
                                 product.cost
                               )}
-
                             </option>
-
                           )
                         )}
 
@@ -1292,6 +1231,7 @@ function Transformaciones() {
 
                     </div>
 
+                    {/* CANTIDAD */}
 
                     <div className="form-group">
 
@@ -1300,31 +1240,29 @@ function Transformaciones() {
                       </label>
 
                       <input
-
                         type="number"
-
                         min="1"
-
                         step="1"
-
                         max={
                           sourceProduct
                             ? sourceProduct.stock
                             : undefined
                         }
-
                         value={
                           form.sourceQuantity
                         }
-
                         onChange={
                           handleSourceQuantityChange
                         }
-
+                        disabled={
+                          !sourceProduct ||
+                          saving
+                        }
                       />
 
                     </div>
 
+                    {/* COSTO UNITARIO */}
 
                     <div className="source-cost">
 
@@ -1340,11 +1278,12 @@ function Transformaciones() {
 
                     </div>
 
+                    {/* COSTO TOTAL */}
 
                     <div className="source-cost">
 
                       <span>
-                        Costo que se transformarÃ¡
+                        Costo que se transformará
                       </span>
 
                       <strong>
@@ -1356,14 +1295,12 @@ function Transformaciones() {
                     </div>
 
                   </>
-
                 )}
 
               </div>
 
-
               {/* =================================
-                  RESULTADOS
+                  SECCIÓN 2 - RESULTADOS
               ================================= */}
 
               <div className="form-section">
@@ -1375,99 +1312,170 @@ function Transformaciones() {
                   </span>
 
                   <div>
-
                     <strong>
-                      Â¿QuÃ© obtuviste?
+                      ¿Qué obtuviste?
                     </strong>
 
                     <small>
-                      Crea cada producto resultante y define su precio de venta
+                      Selecciona cada producto
+                      resultante y define su
+                      cantidad y precio
                     </small>
-
                   </div>
 
                 </div>
 
+                {/* RESULTADOS */}
 
                 <div className="outputs">
 
+                  {outputs.length === 0 && (
+                    <div className="empty-state">
+
+                      <div className="empty-icon">
+                        📦
+                      </div>
+
+                      <h3>
+                        No hay resultados
+                      </h3>
+
+                      <p>
+                        Agrega los productos
+                        obtenidos de la
+                        transformación.
+                      </p>
+
+                    </div>
+                  )}
 
                   {outputs.map(
                     (
                       output,
                       index
                     ) => (
-
                       <div
-
                         className="output-card"
-
                         key={index}
-
                       >
 
                         <div className="output-grid">
 
+                          {/* PRODUCTO */}
 
                           <div className="form-group">
 
                             <label>
-                              Nombre del producto
+                              Producto resultante
+                            </label>
+
+                            <select
+                              value={
+                                output.productId
+                              }
+                              onChange={(event) =>
+                                handleOutputProductChange(
+                                  index,
+                                  event.target.value
+                                )
+                              }
+                              disabled={saving}
+                            >
+
+                              <option value="">
+                                Seleccionar producto...
+                              </option>
+
+                              {products.map(
+                                (product) => (
+                                  <option
+                                    key={
+                                      product.id
+                                    }
+                                    value={
+                                      product.id
+                                    }
+                                  >
+                                    {
+                                      product.name
+                                    }
+                                    {' · '}
+                                    {
+                                      product.category ||
+                                      'Sin categoría'
+                                    }
+                                    {' · '}
+                                    {
+                                      product.unit ||
+                                      'pieza'
+                                    }
+                                  </option>
+                                )
+                              )}
+
+                            </select>
+
+                          </div>
+
+                          {/* NOMBRE */}
+
+                          <div className="form-group">
+
+                            <label>
+                              Nombre
                             </label>
 
                             <input
-
                               type="text"
-
                               value={
                                 output.name
                               }
-
-                              onChange={
-                                event =>
-                                  updateOutput(
-                                    index,
-                                    'name',
-                                    event.target.value
-                                  )
+                              onChange={(event) =>
+                                updateOutput(
+                                  index,
+                                  'name',
+                                  event.target.value
+                                )
                               }
-
-                              placeholder="Ej. Kalanchoe pequeÃ±o"
-
+                              placeholder="Nombre del producto"
+                              disabled={
+                                !output.productId ||
+                                saving
+                              }
                             />
 
                           </div>
 
+                          {/* CATEGORÍA */}
 
                           <div className="form-group">
 
                             <label>
-                              CategorÃ­a
+                              Categoría
                             </label>
 
                             <input
-
                               type="text"
-
                               value={
                                 output.category
                               }
-
-                              onChange={
-                                event =>
-                                  updateOutput(
-                                    index,
-                                    'category',
-                                    event.target.value
-                                  )
+                              onChange={(event) =>
+                                updateOutput(
+                                  index,
+                                  'category',
+                                  event.target.value
+                                )
                               }
-
                               placeholder="Ej. Plantas"
-
+                              disabled={
+                                !output.productId ||
+                                saving
+                              }
                             />
 
                           </div>
 
+                          {/* UNIDAD */}
 
                           <div className="form-group">
 
@@ -1476,20 +1484,20 @@ function Transformaciones() {
                             </label>
 
                             <select
-
                               value={
                                 output.unit
                               }
-
-                              onChange={
-                                event =>
-                                  updateOutput(
-                                    index,
-                                    'unit',
-                                    event.target.value
-                                  )
+                              onChange={(event) =>
+                                updateOutput(
+                                  index,
+                                  'unit',
+                                  event.target.value
+                                )
                               }
-
+                              disabled={
+                                !output.productId ||
+                                saving
+                              }
                             >
 
                               <option value="pieza">
@@ -1520,6 +1528,7 @@ function Transformaciones() {
 
                           </div>
 
+                          {/* CANTIDAD */}
 
                           <div className="form-group">
 
@@ -1528,30 +1537,28 @@ function Transformaciones() {
                             </label>
 
                             <input
-
                               type="number"
-
                               min="1"
-
                               step="1"
-
                               value={
                                 output.quantity
                               }
-
-                              onChange={
-                                event =>
-                                  updateOutput(
-                                    index,
-                                    'quantity',
-                                    event.target.value
-                                  )
+                              onChange={(event) =>
+                                updateOutput(
+                                  index,
+                                  'quantity',
+                                  event.target.value
+                                )
                               }
-
+                              disabled={
+                                !output.productId ||
+                                saving
+                              }
                             />
 
                           </div>
 
+                          {/* PRECIO */}
 
                           <div className="form-group">
 
@@ -1560,231 +1567,181 @@ function Transformaciones() {
                             </label>
 
                             <input
-
                               type="number"
-
                               min="0"
-
                               step="0.01"
-
                               value={
                                 output.salePrice
                               }
-
-                              onChange={
-                                event =>
-                                  updateOutput(
-                                    index,
-                                    'salePrice',
-                                    event.target.value
-                                  )
+                              onChange={(event) =>
+                                updateOutput(
+                                  index,
+                                  'salePrice',
+                                  event.target.value
+                                )
                               }
-
                               placeholder="0.00"
-
+                              disabled={
+                                !output.productId ||
+                                saving
+                              }
                             />
 
                           </div>
 
                         </div>
 
+                        {/* =========================
+                            CÁLCULOS
+                        ========================= */}
 
                         <div className="output-calculation">
 
-
                           <div>
-
                             <span>
                               Valor de venta
                             </span>
 
                             <strong>
-
                               {money(
-
                                 Number(
-                                  output.quantity || 0
+                                  output.quantity ||
+                                    0
                                 ) *
-                                Number(
-                                  output.salePrice || 0
-                                )
-
+                                  Number(
+                                    output.salePrice ||
+                                      0
+                                  )
                               )}
-
                             </strong>
-
                           </div>
 
-
                           <div>
-
                             <span>
-                              ParticipaciÃ³n
+                              Participación
                             </span>
 
                             <strong>
-
                               {getPercentage(
                                 output
                               ).toFixed(2)}
                               %
-
                             </strong>
-
                           </div>
 
-
                           <div>
-
                             <span>
                               Costo asignado
                             </span>
 
                             <strong>
-
                               {money(
                                 calculateAllocatedCost(
                                   output,
                                   index
                                 )
                               )}
-
                             </strong>
-
                           </div>
 
-
                           <div>
-
                             <span>
                               Costo c/u
                             </span>
 
                             <strong>
-
                               {money(
-
                                 Number(
-                                  output.quantity || 0
+                                  output.quantity ||
+                                    0
                                 ) > 0
-
                                   ? calculateAllocatedCost(
                                       output,
                                       index
                                     ) /
-                                    Number(
-                                      output.quantity
-                                    )
-
+                                      Number(
+                                        output.quantity
+                                      )
                                   : 0
-
                               )}
-
                             </strong>
-
                           </div>
 
-
                           <div>
-
                             <span>
                               Utilidad estimada c/u
                             </span>
 
                             <strong>
-
                               {money(
-
                                 Number(
-                                  output.salePrice || 0
+                                  output.salePrice ||
+                                    0
                                 ) -
-
-                                (
-                                  Number(
-                                    output.quantity || 0
+                                  (Number(
+                                    output.quantity ||
+                                      0
                                   ) > 0
-
                                     ? calculateAllocatedCost(
                                         output,
                                         index
                                       ) /
-                                      Number(
-                                        output.quantity
-                                      )
-
-                                    : 0
-                                )
-
+                                        Number(
+                                          output.quantity
+                                        )
+                                    : 0)
                               )}
-
                             </strong>
-
                           </div>
-
 
                         </div>
 
+                        {/* FOOTER */}
 
                         <div className="output-footer">
 
                           <button
-
                             type="button"
-
                             className="remove-output"
-
                             onClick={() =>
                               removeOutput(
                                 index
                               )
                             }
-
+                            disabled={saving}
                           >
-
                             Eliminar
-
                           </button>
 
                         </div>
 
                       </div>
-
                     )
                   )}
 
-
                 </div>
 
+                {/* AGREGAR */}
 
                 <button
-
                   type="button"
-
                   className="add-output-button"
-
-                  onClick={
-                    addOutput
-                  }
-
+                  onClick={addOutput}
+                  disabled={saving}
                 >
-
                   + Agregar resultado
-
                 </button>
 
               </div>
-
 
               {/* =================================
                   RESUMEN
               ================================= */}
 
               {form.sourceProductId && (
-
                 <div className="cost-summary">
 
                   <div>
-
                     <span>
                       Costo transformado
                     </span>
@@ -1794,12 +1751,9 @@ function Transformaciones() {
                         sourceCost
                       )}
                     </strong>
-
                   </div>
 
-
                   <div>
-
                     <span>
                       Valor total de venta
                     </span>
@@ -1809,12 +1763,9 @@ function Transformaciones() {
                         totalProductionValue
                       )}
                     </strong>
-
                   </div>
 
-
                   <div>
-
                     <span>
                       Costo distribuido
                     </span>
@@ -1824,9 +1775,7 @@ function Transformaciones() {
                         totalAllocatedCost
                       )}
                     </strong>
-
                   </div>
-
 
                   <div
                     className={
@@ -1835,7 +1784,6 @@ function Transformaciones() {
                         : 'not-balanced'
                     }
                   >
-
                     <span>
                       Diferencia
                     </span>
@@ -1845,32 +1793,26 @@ function Transformaciones() {
                         difference
                       )}
                     </strong>
-
                   </div>
-
 
                   <div className="balance-message">
 
                     {isBalanced ? (
-
                       <>
-                        âœ“ El 100% del costo estÃ¡ distribuido
+                        ✅ El 100% del costo está
+                        distribuido correctamente.
                       </>
-
                     ) : (
-
                       <>
-                        Revisando distribuciÃ³n...
+                        ⚠️ Falta distribuir
+                        correctamente el costo.
                       </>
-
                     )}
 
                   </div>
 
                 </div>
-
               )}
-
 
               {/* =================================
                   NOTAS
@@ -1885,97 +1827,70 @@ function Transformaciones() {
                   </label>
 
                   <textarea
-
                     value={
                       form.notes
                     }
-
-                    onChange={
-                      event =>
-                        setForm(
-                          current => ({
-
-                            ...current,
-
-                            notes:
-                              event.target.value,
-
-                          })
-                        )
+                    onChange={(event) =>
+                      setForm(
+                        (current) => ({
+                          ...current,
+                          notes:
+                            event.target.value,
+                        })
+                      )
                     }
-
-                    placeholder="InformaciÃ³n adicional..."
-
+                    placeholder="Información adicional..."
                     rows="3"
-
+                    disabled={saving}
                   />
 
                 </div>
 
               </div>
 
+              {/* =================================
+                  BOTONES
+              ================================= */}
 
               <div className="form-actions">
 
                 <button
-
                   type="button"
-
                   className="secondary-button"
-
-                  onClick={() =>
-                    setShowForm(false)
-                  }
-
+                  onClick={closeForm}
+                  disabled={saving}
                 >
-
                   Cancelar
-
                 </button>
 
-
                 <button
-
                   type="submit"
-
                   className="primary-button"
-
                   disabled={
-
+                    saving ||
                     !form.purchaseId ||
-
                     !form.sourceProductId ||
-
                     outputs.length === 0 ||
-
                     totalProductionValue <= 0 ||
-
                     !isBalanced
-
                   }
-
                 >
-
-                  Registrar transformaciÃ³n
-
+                  {saving
+                    ? 'Registrando...'
+                    : 'Registrar transformación'}
                 </button>
 
               </div>
-
 
             </form>
 
           </div>
 
         </div>
-
       )}
 
     </section>
-
   )
-
 }
-
 
 export default Transformaciones

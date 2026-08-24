@@ -1,4 +1,4 @@
-﻿import API_URL from '../api'
+import API_URL from '../api'
 import { useEffect, useMemo, useState } from 'react'
 
 
@@ -157,7 +157,7 @@ function PuntoVenta() {
 
     return (
       product.category ||
-      'Sin categorÃ­a'
+      'Sin categoría'
     )
 
   }
@@ -188,7 +188,7 @@ function PuntoVenta() {
 
           Esto evita mostrar productos como
           "kalanchoe" cuando fue consumido
-          completamente por una transformaciÃ³n.
+          completamente por una transformación.
         */
 
         return (
@@ -291,7 +291,7 @@ function PuntoVenta() {
     if (price <= 0) {
 
       alert(
-        'Este producto no tiene un precio de venta vÃ¡lido.'
+        'Este producto no tiene un precio de venta válido.'
       )
 
       return
@@ -309,7 +309,7 @@ function PuntoVenta() {
 
 
       // ==================================
-      // EL PRODUCTO YA ESTÃ EN EL CARRITO
+      // EL PRODUCTO YA ESTÁ EN EL CARRITO
       // ==================================
 
       if (existing) {
@@ -320,7 +320,7 @@ function PuntoVenta() {
         ) {
 
           alert(
-            'No hay mÃ¡s unidades disponibles en el inventario.'
+            'No hay más unidades disponibles en el inventario.'
           )
 
           return current
@@ -412,15 +412,15 @@ function PuntoVenta() {
 
 
           // ==================================
-          // PROMOCIÃ“N SELECCIONADA
+          // PROMOCI�"N SELECCIONADA
           // ==================================
 
           /*
             null significa que actualmente
-            se estÃ¡ utilizando el precio normal.
+            se está utilizando el precio normal.
 
-            La promociÃ³n NO se aplica
-            automÃ¡ticamente.
+            La promoción NO se aplica
+            automáticamente.
           */
 
           selectedPromotion:
@@ -465,7 +465,7 @@ function PuntoVenta() {
         ) {
 
           alert(
-            'No hay mÃ¡s unidades disponibles en el inventario.'
+            'No hay más unidades disponibles en el inventario.'
           )
 
           return item
@@ -478,15 +478,15 @@ function PuntoVenta() {
 
 
         // ==================================
-        // CONSERVAR PROMOCIÃ“N SELECCIONADA
+        // CONSERVAR PROMOCI�"N SELECCIONADA
         // ==================================
 
         /*
           La cantidad puede aumentar sin
-          cambiar automÃ¡ticamente la promociÃ³n.
+          cambiar automáticamente la promoción.
 
-          Esto permite que tÃº decidas cuÃ¡ndo
-          aplicar o quitar una promociÃ³n.
+          Esto permite que tú decidas cuándo
+          aplicar o quitar una promoción.
         */
 
         return {
@@ -560,7 +560,7 @@ function PuntoVenta() {
 
 
           // ==================================
-          // VALIDAR PROMOCIÃ“N SELECCIONADA
+          // VALIDAR PROMOCI�"N SELECCIONADA
           // ==================================
 
           let selectedPromotion =
@@ -579,19 +579,19 @@ function PuntoVenta() {
 
             /*
               Si la nueva cantidad ya no alcanza
-              para la promociÃ³n seleccionada,
+              para la promoción seleccionada,
               la quitamos.
 
               Ejemplo:
 
-              PromociÃ³n:
+              Promoción:
               2 plantas por $60
 
               Cantidad:
-              2 â†’ vÃ¡lida
+              2 �?' válida
 
               Cantidad:
-              1 â†’ se elimina la promociÃ³n.
+              1 �?' se elimina la promoción.
             */
 
             if (
@@ -687,7 +687,7 @@ function PuntoVenta() {
   // ========================================
 
   /*
-    Cada promociÃ³n tiene:
+    Cada promoción tiene:
 
     quantity = cantidad de piezas
     price    = precio total por esas piezas
@@ -697,24 +697,24 @@ function PuntoVenta() {
     2 piezas por $60
     3 piezas por $90
 
-    El sistema NO estÃ¡ limitado a esos nÃºmeros.
+    El sistema NO está limitado a esos números.
     Puedes agregar cualquier cantidad y cualquier precio.
   */
 
      // ========================================
-  // CALCULAR PRECIO CON PROMOCIÃ“N
+  // CALCULAR PRECIO CON PROMOCI�"N
   // ========================================
 
   /*
     Calcula el precio de una cantidad de
-    productos utilizando UNA promociÃ³n
-    especÃ­fica.
+    productos utilizando UNA promoción
+    específica.
 
     Ejemplo:
 
     Precio normal: $35
 
-    PromociÃ³n seleccionada:
+    Promoción seleccionada:
     2 piezas por $60
 
     Cantidad: 5
@@ -775,7 +775,7 @@ function PuntoVenta() {
 
 
     // ==================================
-    // SI NO HAY PROMOCIÃ“N
+    // SI NO HAY PROMOCI�"N
     // ==================================
 
     if (
@@ -793,7 +793,7 @@ function PuntoVenta() {
 
 
     // ==================================
-    // DATOS DE LA PROMOCIÃ“N
+    // DATOS DE LA PROMOCI�"N
     // ==================================
 
     const promotionQuantity =
@@ -809,7 +809,7 @@ function PuntoVenta() {
 
 
     // ==================================
-    // VALIDAR PROMOCIÃ“N
+    // VALIDAR PROMOCI�"N
     // ==================================
 
     if (
@@ -907,7 +907,7 @@ function PuntoVenta() {
 
 
     // ==================================
-    // SIN PROMOCIÃ“N
+    // SIN PROMOCI�"N
     // ==================================
 
     if (
@@ -925,7 +925,7 @@ function PuntoVenta() {
 
 
     // ==================================
-    // CON PROMOCIÃ“N
+    // CON PROMOCI�"N
     // ==================================
 
     return calculatePromotionPrice(
@@ -942,8 +942,8 @@ function PuntoVenta() {
 
 
   /*
-    Precio efectivo por pieza despuÃ©s
-    de aplicar la promociÃ³n.
+    Precio efectivo por pieza después
+    de aplicar la promoción.
 
     Se utiliza para mostrarlo en pantalla.
   */
@@ -976,12 +976,12 @@ function PuntoVenta() {
 
     IMPORTANTE:
 
-    AquÃ­ ya no utilizamos simplemente:
+    Aquí ya no utilizamos simplemente:
 
-      precio Ã— cantidad
+      precio �- cantidad
 
     porque ahora puede existir
-    una promociÃ³n.
+    una promoción.
   */
 
   const subtotal =
@@ -1047,11 +1047,11 @@ function PuntoVenta() {
   // ========================================
 
   /*
-    Calculamos cuÃ¡nto se estÃ¡ ahorrando
+    Calculamos cuánto se está ahorrando
     el cliente gracias a las promociones.
 
     Precio normal:
-      precio Ã— cantidad
+      precio �- cantidad
 
     Precio promocional:
       getItemSaleTotal(item)
@@ -1099,7 +1099,7 @@ function PuntoVenta() {
 
   /*
     La utilidad ahora toma en cuenta
-    el precio real cobrado despuÃ©s
+    el precio real cobrado después
     de aplicar promociones.
   */
 
@@ -1306,7 +1306,7 @@ function PuntoVenta() {
         <div>
 
           <p className="welcome">
-            Ezra â€” Tienda de Plantas y DecoraciÃ³n
+            Ezra �?" Tienda de Plantas y Decoración
           </p>
 
           <h2>
@@ -1397,7 +1397,7 @@ function PuntoVenta() {
 
 
         {/* ===================================
-            CATÃLOGO
+            CATÁLOGO
         ==================================== */}
 
         <div className="panel">
@@ -1407,7 +1407,7 @@ function PuntoVenta() {
             <div>
 
               <h3>
-                CatÃ¡logo
+                Catálogo
               </h3>
 
               <p>
@@ -1447,7 +1447,7 @@ function PuntoVenta() {
                 )
               }
 
-              placeholder="Buscar por nombre, categorÃ­a o SKU..."
+              placeholder="Buscar por nombre, categoría o SKU..."
 
             />
 
@@ -1461,7 +1461,7 @@ function PuntoVenta() {
             <div className="empty-state">
 
               <div className="empty-icon">
-                ðŸŒ±
+                �YO�
               </div>
 
               <h3>
@@ -1479,7 +1479,7 @@ function PuntoVenta() {
             <div className="empty-state">
 
               <div className="empty-icon">
-                ðŸŒ¿
+                �YO�
               </div>
 
               <h3>
@@ -1494,9 +1494,9 @@ function PuntoVenta() {
 
                 {search.trim()
 
-                  ? 'Prueba con otro nombre o categorÃ­a.'
+                  ? 'Prueba con otro nombre o categoría.'
 
-                  : 'Los productos con stock en cero o precio de venta en $0 no aparecen aquÃ­.'}
+                  : 'Los productos con stock en cero o precio de venta en $0 no aparecen aquí.'}
 
               </p>
 
@@ -1608,12 +1608,12 @@ function PuntoVenta() {
 
                       >
 
-                        ðŸŒ±
+                        �YO�
 
                       </div>
 
 
-                      {/* CATEGORÃA */}
+                      {/* CATEGORÍA */}
 
                       <div
 
@@ -1755,8 +1755,8 @@ function PuntoVenta() {
                         >
 
                           {lowStock
-                            ? 'âš  Poco stock'
-                            : 'âœ“ Disponible'}
+                            ? '�s� Poco stock'
+                            : '�o" Disponible'}
 
                         </span>
 
@@ -1770,7 +1770,7 @@ function PuntoVenta() {
                       </div>
 
 
-                      {/* BOTÃ“N */}
+                      {/* BOT�"N */}
 
                       <button
 
@@ -1818,7 +1818,7 @@ function PuntoVenta() {
             <div>
 
               <h3>
-                ðŸ›’ Venta actual
+                �Y>' Venta actual
               </h3>
 
               <p>
@@ -1859,23 +1859,23 @@ function PuntoVenta() {
           </div>
 
 
-          {/* CARRITO VACÃO */}
+          {/* CARRITO VACÍO */}
 
           {cart.length === 0 ? (
 
             <div className="empty-state">
 
               <div className="empty-icon">
-                ðŸ›’
+                �Y>'
               </div>
 
               <h3>
-                Carrito vacÃ­o
+                Carrito vacío
               </h3>
 
               <p>
 
-                Selecciona productos del catÃ¡logo
+                Selecciona productos del catálogo
                 para comenzar una venta.
 
               </p>
@@ -2108,7 +2108,7 @@ function PuntoVenta() {
 
                           >
 
-                            âˆ’
+                            �^'
 
                           </button>
 
@@ -2188,7 +2188,7 @@ function PuntoVenta() {
 
 
                       {/* =================================
-                          PROMOCIÃ“N
+                          PROMOCI�"N
                       ================================== */}
 
                       {hasPromotions && (
@@ -2236,7 +2236,7 @@ function PuntoVenta() {
 
                           >
 
-                            ðŸ·ï¸ PromociÃ³n
+                            �Y��️ Promoción
 
                           </label>
 
@@ -2363,7 +2363,7 @@ function PuntoVenta() {
 
                             <option value="">
 
-                              Sin promociÃ³n
+                              Sin promoción
 
                             </option>
 
@@ -2402,7 +2402,7 @@ function PuntoVenta() {
 
 
                           {/* =================================
-                              INFORMACIÃ“N DEL PRECIO
+                              INFORMACI�"N DEL PRECIO
                           ================================== */}
 
                           {item.selectedPromotion && (
@@ -2486,7 +2486,7 @@ function PuntoVenta() {
 
                                 <span>
 
-                                  Precio promociÃ³n:
+                                  Precio promoción:
 
                                 </span>
 
@@ -2625,7 +2625,7 @@ function PuntoVenta() {
                 <div className="form-group">
 
                   <label>
-                    Costo de envÃ­o
+                    Costo de envío
                   </label>
 
                   <input
@@ -2737,7 +2737,7 @@ function PuntoVenta() {
                   >
 
                     <span>
-                      EnvÃ­o
+                      Envío
                     </span>
 
                     <strong>
@@ -3012,7 +3012,7 @@ function PuntoVenta() {
 
                     ? 'Registrando venta...'
 
-                    : 'ðŸ’µ Cobrar venta'
+                    : '�Y'� Cobrar venta'
 
                   }
 

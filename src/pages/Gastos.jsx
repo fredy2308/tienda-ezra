@@ -1,4 +1,4 @@
-﻿import API_URL from '../api'
+import API_URL from '../api'
 import { useEffect, useState } from 'react'
 
 function Gastos() {
@@ -9,7 +9,7 @@ function Gastos() {
 
   const [form, setForm] = useState({
     description: '',
-    category: 'OperaciÃ³n',
+    category: 'Operación',
     amount: '',
     paymentMethod: 'Efectivo',
     expenseDate: new Date().toISOString().split('T')[0],
@@ -104,7 +104,7 @@ function Gastos() {
     if (!form.description.trim()) {
 
       alert(
-        'Escribe una descripciÃ³n del gasto.'
+        'Escribe una descripción del gasto.'
       )
 
       return
@@ -193,7 +193,7 @@ function Gastos() {
         description: '',
 
         category:
-          'OperaciÃ³n',
+          'Operación',
 
         amount: '',
 
@@ -236,7 +236,7 @@ function Gastos() {
 
     const confirmed =
       window.confirm(
-        'Â¿Seguro que quieres eliminar este gasto?'
+        '¿Seguro que quieres eliminar este gasto?'
       )
 
     if (!confirmed) {
@@ -395,7 +395,7 @@ function Gastos() {
         <div className="stat-card">
 
           <span>
-            Total histÃ³rico
+            Total histórico
           </span>
 
           <strong>
@@ -444,7 +444,7 @@ function Gastos() {
           <div className="form-group">
 
             <label>
-              DescripciÃ³n
+              Descripción
             </label>
 
             <input
@@ -461,7 +461,7 @@ function Gastos() {
           <div className="form-group">
 
             <label>
-              CategorÃ­a
+              Categoría
             </label>
 
             <select
@@ -470,8 +470,8 @@ function Gastos() {
               onChange={handleChange}
             >
 
-              <option value="OperaciÃ³n">
-                OperaciÃ³n
+              <option value="Operación">
+                Operación
               </option>
 
               <option value="Servicios">
@@ -494,8 +494,8 @@ function Gastos() {
                 Publicidad
               </option>
 
-              <option value="NÃ³mina">
-                NÃ³mina
+              <option value="Nómina">
+                Nómina
               </option>
 
               <option value="Impuestos">
@@ -533,7 +533,7 @@ function Gastos() {
           <div className="form-group">
 
             <label>
-              MÃ©todo de pago
+              Método de pago
             </label>
 
             <select
@@ -554,8 +554,8 @@ function Gastos() {
                 Transferencia
               </option>
 
-              <option value="CrÃ©dito">
-                CrÃ©dito
+              <option value="Crédito">
+                Crédito
               </option>
 
               <option value="Otro">
@@ -610,7 +610,7 @@ function Gastos() {
 
               {saving
                 ? 'Guardando...'
-                : 'ðŸ’¸ Registrar gasto'}
+                : '�Y'� Registrar gasto'}
 
             </button>
 
@@ -655,7 +655,7 @@ function Gastos() {
           <div className="empty-state">
 
             <div style={{ fontSize: '40px' }}>
-              ðŸ’¸
+              �Y'�
             </div>
 
             <h3>
@@ -683,15 +683,15 @@ function Gastos() {
                   </th>
 
                   <th>
-                    DescripciÃ³n
+                    Descripción
                   </th>
 
                   <th>
-                    CategorÃ­a
+                    Categoría
                   </th>
 
                   <th>
-                    MÃ©todo
+                    Método
                   </th>
 
                   <th>
@@ -772,7 +772,7 @@ function Gastos() {
                           )
                         }
                       >
-                        ðŸ—‘ï¸
+                        �Y-'️
                       </button>
 
                     </td>
